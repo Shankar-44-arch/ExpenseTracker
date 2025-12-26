@@ -1,0 +1,98 @@
+@import url("cat.css");
+
+/* ===== PAGE INTRO ===== */
+.page-intro{
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar a:hover,
+.sidebar .active {
+    background: #4CAF50;
+}
+
+/* Content */
+.content {
+    padding: 25px;
+    width: 100%;
+}
+
+/* Summary Cards */
+.summary {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    width: 300px;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.income { border-left: 6px solid #4CAF50; }
+.expense { border-left: 6px solid #f44336; }
+.savings { border-left: 6px solid #2196F3; }
+.category { border-left: 6px solid #FF9800; }
+
+/* Charts */
+.chart-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.chart-box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    height: 300px;
+}
+
+.chart-box canvas {
+    max-height: 220px;
+}
+
+/* Transactions */
+.transactions {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #f0f0f0;
+}
+
+.income {
+    color: green;
+}
+
+.expense {
+    color: red;
+}
+

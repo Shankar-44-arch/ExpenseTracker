@@ -1,0 +1,348 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <link rel="stylesheet" href="{% static 'css/cate.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{%  url 'dashboard' %}">Dashboard</a>
+            <a href="{%  url 'transaction' %}">Transactions</a>
+            <a href="{%  url 'category' %}" class="active">Categories</a>
+            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{%  url 'setting' %}">Settings</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>John Doe</strong></p>
+            <small>View profile</small>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+
+            <div class="page-intro">
+                <h2>Categories</h2>
+                <p>Manage your budget categories</p>
+            </div>
+
+            <section class="controls">
+                <div class="view-buttons">
+                    <button class="active" id="gridViewBtn">Grid</button>
+                    <button id="listViewBtn">List</button>
+                </div>
+                <button class="add-btn" id="addCategoryBtn">+ Add Category</button>
+            </section>
+
+            <!-- Grid View -->
+            <section class="category-grid" id="gridView">
+                <div class="category-card">
+                    <h3>🍔 Food</h3>
+                    <p>Includes groceries, dining out, and snacks.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>🚕 Travel</h3>
+                    <p>Taxi fares, fuel, public transport, and rideshares.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>🛒 Shopping</h3>
+                    <p>Clothes, accessories, and online shopping expenses.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>🏠 Housing</h3>
+                    <p>Rent, mortgage, property taxes, and home maintenance.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>💡 Utilities</h3>
+                    <p>Electricity, water, gas, internet, and phone bills.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>🎬 Entertainment</h3>
+                    <p>Movies, streaming services, concerts, and hobbies.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <h3>🏥 Health</h3>
+                    <p>Medical checkups, medicines, and health insurance.</p>
+                    <div class="card-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- List View (hidden by default) -->
+            <section class="category-list" id="listView" style="display:none;">
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>🍔 Food</h3>
+                        <p>Includes groceries, dining out, and snacks.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>🚕 Travel</h3>
+                        <p>Taxi fares, fuel, public transport, and rideshares.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>🛒 Shopping</h3>
+                        <p>Clothes, accessories, and online shopping expenses.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>🏠 Housing</h3>
+                        <p>Rent, mortgage, and home maintenance.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>💡 Utilities</h3>
+                        <p>Electricity, water, gas, and internet bills.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-info">
+                        <h3>🎬 Entertainment</h3>
+                        <p>Streaming, movies, and hobbies.</p>
+                    </div>
+                    <div class="list-actions">
+                        <button>Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Category</h3>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label for="categoryName">Name</label>
+                    <input type="text" id="categoryName" placeholder="e.g., Subscriptions" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category Icon</label>
+                    <div class="icon-selection-container">
+                        <div class="preset-icons" id="presetIcons">
+                            <span class="icon-option active" data-icon="💰">💰</span>
+                            <span class="icon-option" data-icon="🎮">🎮</span>
+                            <span class="icon-option" data-icon="📚">📚</span>
+                            <span class="icon-option" data-icon="🏋️">🏋️</span>
+                            <span class="icon-option" data-icon="🎁">🎁</span>
+                            <span class="icon-option" data-icon="🍔">🍔</span>
+                        </div>
+                        <div class="upload-divider"><span>OR</span></div>
+                        <div class="custom-upload">
+                            <input type="file" id="categoryIconFile" accept="image/*" hidden>
+                            <button type="button" class="upload-trigger" id="uploadBtn">Upload Custom Icon</button>
+                            <div id="fileNameDisplay" style="font-size: 12px; color: #666; margin-top: 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryDesc">Description</label>
+                    <textarea id="categoryDesc" placeholder="What is this for?" rows="1"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="save-btn">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Grid/List Views
+        const gridBtn = document.getElementById('gridViewBtn');
+        const listBtn = document.getElementById('listViewBtn');
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+
+        gridBtn.addEventListener('click', () => {
+            gridView.style.display = 'grid';
+            listView.style.display = 'none';
+            gridBtn.classList.add('active');
+            listBtn.classList.remove('active');
+        });
+
+        listBtn.addEventListener('click', () => {
+            gridView.style.display = 'none';
+            listView.style.display = 'block';
+            listBtn.classList.add('active');
+            gridBtn.classList.remove('active');
+        });
+
+        // --- New Modal Code ---
+        const modal = document.getElementById('addCategoryModal');
+        const openModalBtn = document.getElementById('addCategoryBtn');
+        const closeModalX = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        // Open Modal
+        openModalBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        // Close Modal functions
+        const closeModal = () => {
+            modal.style.display = 'none';
+        };
+
+        closeModalX.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        // Close if user clicks outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                closeModal();
+            }
+        });
+
+        // Handle Form Submission
+        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('categoryName').value;
+            const icon = document.getElementById('categoryIcon').value;
+            const color = document.getElementById('categoryColor').value;
+
+            // This is where you would normally send data to your Django backend
+            console.log("New Category Added:", { name, icon, color });
+
+            alert(`Category "${name}" added successfully!`);
+            closeModal();
+            e.target.reset(); // Clear form for next time
+        });
+
+        const descArea = document.getElementById('categoryDesc');
+        const presetIcons = document.querySelectorAll('.icon-option');
+        const fileInput = document.getElementById('categoryIconFile');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        let selectedIcon = "💰"; // Default
+
+        // 1. Auto-Resize Description
+        descArea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // 2. Handle Preset Icon Selection
+        presetIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                presetIcons.forEach(i => i.classList.remove('active'));
+                icon.classList.add('active');
+                selectedIcon = icon.getAttribute('data-icon');
+                fileInput.value = ""; // Clear file if emoji is picked
+                fileNameDisplay.innerText = "";
+            });
+        });
+
+        // 3. Handle File Upload Trigger
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                presetIcons.forEach(i => i.classList.remove('active'));
+                selectedIcon = "custom-file";
+                fileNameDisplay.innerText = "Selected: " + e.target.files[0].name;
+            }
+        });
+
+        // 4. Form Submit
+        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('categoryName').value,
+                description: descArea.value,
+                icon: selectedIcon === "custom-file" ? fileInput.files[0] : selectedIcon
+            };
+            console.log("Saving Category Data:", data);
+            alert("Category Saved!");
+            modal.style.display = 'none';
+            e.target.reset();
+            descArea.style.height = 'auto';
+        });
+
+    </script>
+
+</body>
+</html>

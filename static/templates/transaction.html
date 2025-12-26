@@ -1,0 +1,162 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="{% static 'css/trans.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}" class="active">Transactions</a>
+            <a href="{%  url 'category' %}">Categories</a>
+            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{%  url 'setting' %}">Settings</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>John Doe</strong></p>
+            <small>View profile</small>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="content">
+
+            <div class="page-intro">
+                <h2>Transactions</h2>
+                <p>Track all your income and expenses</p>
+            </div>
+
+            <section class="filters">
+                <input type="text" placeholder="Search">
+                <select>
+                    <option>All Categories</option>
+                    <option>Food</option>
+                    <option>Travel</option>
+                </select>
+                <select>
+                    <option>All Time</option>
+                    <option>Today</option>
+                    <option>This Month</option>
+                </select>
+                <button class="add-btn">+ Add Transaction</button>
+            </section>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Groceries</td>
+                        <td>Food</td>
+                        <td>22/05/2025</td>
+                        <td>₹200</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td>Groceries</td>
+                        <td>Food</td>
+                        <td>22/05/2025</td>
+                        <td>₹200</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Bus Ticket</td>
+                        <td>Travel</td>
+                        <td>21/05/2025</td>
+                        <td>₹50</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Electricity Bill</td>
+                        <td>Bills</td>
+                        <td>20/05/2025</td>
+                        <td>₹1,200</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Restaurant</td>
+                        <td>Food</td>
+                        <td>19/05/2025</td>
+                        <td>₹650</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Movie Ticket</td>
+                        <td>Entertainment</td>
+                        <td>18/05/2025</td>
+                        <td>₹300</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Fuel</td>
+                        <td>Transport</td>
+                        <td>17/05/2025</td>
+                        <td>₹1,500</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Salary</td>
+                        <td>Income</td>
+                        <td>01/05/2025</td>
+                        <td>₹35,000</td>
+                        <td>
+                            <button class="edit">Edit</button>
+                            <button class="delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </main>
+</div>
+
+</body>
+</html>

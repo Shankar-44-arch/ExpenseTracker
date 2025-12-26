@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+
+    <link rel="stylesheet" href="{% static 'css/report.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+<div class="layout">
+
+     <!-- ========== SIDEBAR ========== -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{%  url 'dashboard' %}">Dashboard</a>
+            <a href="{%  url 'transaction' %}">Transactions</a>
+            <a href="{%  url 'category' %}">Categories</a>
+            <a href="{%  url 'report' %}" class="active">Reports</a>
+            <a href="{%  url 'setting' %}">Settings</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>John Doe</strong></p>
+            <small>View profile</small>
+        </div>
+    </div>
+
+    <main class="content">
+
+        <!-- Page Intro -->
+        <div class="page-intro">
+            <h2>Report</h2>
+            <p>Report of your finances</p>
+        </div>
+
+        <!-- Charts -->
+        <div class="chart-section">
+
+            <div class="chart-box">
+                <h3>Monthly Trend</h3>
+                <canvas id="monthlyChart"></canvas>
+            </div>
+
+            <div class="chart-box">
+                <h3>Expenses by Category</h3>
+                <canvas id="expenseChart"></canvas>
+            </div>
+
+            <div class="chart-box">
+                <h3>Income vs Expense</h3>
+                <canvas id="incomeExpenseChart"></canvas>
+            </div>
+
+        </div>
+
+        <!-- Export -->
+        <div class="export-section">
+            <h3>Export Reports</h3>
+            <div class="export-buttons">
+                <button>Excel</button>
+                <button>CSV</button>
+                <button>PDF</button>
+                <button>Image</button>
+            </div>
+        </div>
+<script src="{% static 'js/report.js' %}"></script>
+    </main>
+</div>
+
+</body>
+</html>
