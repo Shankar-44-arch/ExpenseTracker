@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Reports</title>
 
-    <link rel="stylesheet" href="{% static 'css/report.css' %}">
+    <link rel="stylesheet" href="{% static 'css/report1.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -23,6 +23,7 @@
             <a href="{%  url 'transaction' %}">Transactions</a>
             <a href="{%  url 'category' %}">Categories</a>
             <a href="{%  url 'report' %}" class="active">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
         </nav>
 
@@ -71,6 +72,8 @@
             </div>
         </div>
 <script src="{% static 'js/report.js' %}"></script>
+<script src="{% static 'js/theme.js' %}"></script>
+
     </main>
 </div>
 

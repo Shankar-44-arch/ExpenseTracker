@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Categories</title>
-    <link rel="stylesheet" href="{% static 'css/cate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cat1.css' %}">
 </head>
 <body>
 
@@ -20,6 +20,7 @@
             <a href="{%  url 'transaction' %}">Transactions</a>
             <a href="{%  url 'category' %}" class="active">Categories</a>
             <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
         </nav>
 
@@ -343,6 +344,8 @@
         });
 
     </script>
+
+<script src="{% static 'js/theme.js' %}"></script>
 
 </body>
 </html>

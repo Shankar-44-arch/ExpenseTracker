@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="{% static 'css/cal1.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{%  url 'dashboard' %}">Dashboard</a>
+            <a href="{%  url 'transaction' %}">Transactions</a>
+            <a href="{%  url 'category' %}">Categories</a>
+            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}" class="active">Calculator</a>
+            <a href="{%  url 'setting' %}">Settings</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>John Doe</strong></p>
+            <small>View profile</small>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <div class="page-intro">
+            <h2>Calculator</h2>
+            <p>Quick calculations & interest estimation</p>
+        </div>
+
+        <div class="calc-wrapper">
+
+            <!-- Normal Calculator -->
+            <div class="calc-box">
+                <h3>Basic Calculator</h3>
+
+                <input type="text" id="calc-display" readonly>
+
+                <div class="calc-grid">
+                    <button onclick="clearCalc()">C</button>
+                    <button onclick="removeOne()">⌫</button>
+                    <button onclick="add('/')">÷</button>
+                    <button onclick="add('*')">×</button>
+                    <button onclick="add('-')">−</button>
+
+                    <button onclick="add('7')">7</button>
+                    <button onclick="add('8')">8</button>
+                    <button onclick="add('9')">9</button>
+                    <button onclick="add('+')">+</button>
+
+                    <button onclick="add('4')">4</button>
+                    <button onclick="add('5')">5</button>
+                    <button onclick="add('6')">6</button>
+                    <button onclick="add('1')">1</button>
+                    
+                    <button onclick="add('2')">2</button>
+                    <button onclick="add('3')">3</button>
+                    <button onclick="calculate()" class="equal">=</button>
+                    <button onclick="add('0')" class="zero">0</button>
+                </div>
+            </div>
+
+            <!-- Interest Calculator -->
+            <div class="calc-box">
+                <h3>Interest Rate Calculator (FD)</h3>
+
+                <div class="slider-group">
+                    <label>Initial Amount: ₹<span id="amountVal">10000</span></label>
+                    <input type="range" min="1000" max="1000000" step="1000" value="10000" id="amount">
+                </div>
+
+                <div class="slider-group">
+                    <label>Interest Rate (%): <span id="rateVal">6</span>%</label>
+                    <input type="range" min="1" max="15" step="0.1" value="6" id="rate">
+                </div>
+
+                <div class="slider-group">
+                    <label>Time Period (Years): <span id="timeVal">5</span></label>
+                    <input type="range" min="1" max="20" value="5" id="time">
+                </div>
+
+                <div class="result-box">
+                    <h4>Total Amount</h4>
+                    <p>₹ <span id="totalAmount">0</span></p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="{% static 'js/cal.js' %}"></script>
+<script src="{% static 'js/theme.js' %}"></script>
+
+</body>
+</html>

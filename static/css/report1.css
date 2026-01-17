@@ -1,4 +1,4 @@
-@import url("cat.css");
+@import url("sidebar.css");
 
 .page-intro{
     background: linear-gradient(135deg, #4CAF50, #66BB6A);
@@ -42,3 +42,5 @@
     background: #4CAF50;
     color: white;
 }
+
+

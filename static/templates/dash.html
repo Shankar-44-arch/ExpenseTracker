@@ -4,9 +4,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reports</title>
+    <title>Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dash1.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -22,6 +22,7 @@
             <a href="{% url 'transaction' %}">Transactions</a>
             <a href="{% url 'category' %}">Categories</a>
             <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
         </nav>
 
@@ -116,5 +117,7 @@
 </div>
 
 <script src="{% static 'js/dash.js' %}"></script>
+<script src="{% static 'js/theme.js' %}"></script>
+
 </body>
 </html>

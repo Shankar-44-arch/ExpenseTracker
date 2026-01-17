@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Transactions</title>
-    <link rel="stylesheet" href="{% static 'css/trans.css' %}">
+    <link rel="stylesheet" href="{% static 'css/transactions1.css' %}">
 </head>
 <body>
 
@@ -20,6 +20,7 @@
             <a href="{% url 'transaction' %}" class="active">Transactions</a>
             <a href="{%  url 'category' %}">Categories</a>
             <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
         </nav>
 
@@ -157,6 +158,116 @@
 
         </main>
 </div>
+<!-- ===== ADD TRANSACTION MODAL ===== -->
+<div class="modal" id="transactionModal">
+    <div class="modal-content">
+        <h3>Add Transaction</h3>
+
+        <!-- Type Switch -->
+        <div class="type-switch">
+            <button id="expenseBtn" class="active" onclick="showExpense()">Expense</button>
+            <button id="incomeBtn" onclick="showIncome()">Income</button>
+        </div>
+
+        <!-- FORM -->
+        <form>
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+                <label>Category</label>
+                <select id="category">
+                    <option>Food</option>
+                    <option>Travel</option>
+                    <option>Bills</option>
+                    <option>Entertainment</option>
+                </select>
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" placeholder="Enter amount" min="0" step="1" id="amount">
+            </div>
+
+            <!-- DATE -->
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date">
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Description"></textarea>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="modal-actions">
+                <button type="button" class="cancel" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="save">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script>
+const modal = document.getElementById("transactionModal");
+const category = document.getElementById("category");
+const expenseBtn = document.getElementById("expenseBtn");
+const incomeBtn = document.getElementById("incomeBtn");
+
+/* Open modal */
+document.querySelector(".add-btn").onclick = () => {
+    modal.style.display = "flex";
+};
+
+/* Close modal */
+function closeModal() {
+    modal.style.display = "none";
+}
+
+/* Expense mode */
+function showExpense() {
+    expenseBtn.classList.add("active");
+    incomeBtn.classList.remove("active");
+
+    category.disabled = false;
+    category.innerHTML = `
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Bills</option>
+        <option>Entertainment</option>
+    `;
+}
+
+/* Income mode */
+function showIncome() {
+    incomeBtn.classList.add("active");
+    expenseBtn.classList.remove("active");
+
+    category.innerHTML = `<option>Income</option>`;
+    category.disabled = true;
+}
+
+const amountInput = document.getElementById("amount");
+
+/* Prevent typing negative values */
+amountInput.addEventListener("input", () => {
+    if (amountInput.value < 0) {
+        amountInput.value = 0;
+    }
+});
+
+/* Optional: Prevent form submit if amount is invalid */
+document.querySelector(".modal-content form").addEventListener("submit", (e) => {
+    if (amountInput.value <= 0) {
+        alert("Amount must be greater than zero");
+        e.preventDefault();
+    }
+});
+</script>
+
+<script src="{% static 'js/theme.js' %}"></script>
 
 </body>
 </html>

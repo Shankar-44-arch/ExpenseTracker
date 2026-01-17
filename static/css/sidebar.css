@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #1e1e2f;
+    color: white;
+    padding: 25px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.menu a {
+    display: block;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.menu a:hover,
+.menu .active {
+    background: #4CAF50;
+}
+
+.profile {
+    position: absolute;
+    bottom: 20px;
+    font-size: 14px;
+}
+
+/* Content */
+.content {
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+}
+
+/* ===== PAGE INTRO ===== */
+.page-intro {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* ================= GLOBAL DARK MODE ================= */
+
+body.dark {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark .content {
+    background: #121212;
+}
+
+/* Cards */
+body.dark .card,
+body.dark .modal-box,
+body.dark table {
+    background: #1e1e1e;
+    color: #e7a6a6;
+}
+
+/* Text */
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+    color: #04da04;
+}
+
+body.dark p,
+body.dark span,
+body.dark label,
+body.dark small {
+    color: #d70c0c;
+}
+
+/* Inputs */
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background: #e6e1e1;
+    color: rgb(31, 29, 29);
+    border-color: #444;
+}
+
+/* Sidebar */
+body.dark .sidebar {
+    background: #151520;
+}
+
+body.dark .menu a {
+    color: #cfcfcf;
+}
+
+body.dark .menu a:hover,
+body.dark .menu .active {
+    background: #4CAF50;
+    color: #121212;
+}

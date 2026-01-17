@@ -1,56 +1,125 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Settings</title>
-    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sett1.css' %}">
 </head>
 <body>
 
 <div class="layout">
 
-    <!-- ========== SIDEBAR ========== -->
+    <!-- Sidebar -->
     <div class="sidebar">
         <h2 class="logo">FinTracker</h2>
-
         <nav class="menu">
-            <a href="{%  url 'dashboard' %}">Dashboard</a>
-            <a href="{%  url 'transaction' %}">Transactions</a>
-            <a href="{%  url 'category' %}">Categories</a>
-            <a href="{%  url 'report' %}">Reports</a>
-            <a href="{%  url 'setting' %}" class="active">Settings</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}">Transactions</a>
+            <a href="{% url 'category' %}">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
+            <a href="{% url 'setting' %}" class="active">Settings</a>
         </nav>
-
-        <div class="profile">
-            <p><strong>John Doe</strong></p>
-            <small>View profile</small>
-        </div>
     </div>
 
+    <!-- Content -->
     <main class="content">
 
-        <!-- Page Intro -->
         <div class="page-intro">
             <h2>Settings</h2>
-            <p>Let's made some changes</p>
+            <p>Manage your profile and security</p>
         </div>
 
-        <div class="settings-card">
-            <h3>Profile</h3>
-            <p>Name: John Doe</p>
-            <p>Email: john@example.com</p>
-            <button>Edit Profile</button>
-        </div>
+        <div class="settings-grid">
 
-        <div class="settings-card">
-            <h3>Account</h3>
-            <button class="logout">Logout</button>
-        </div>
+            <!-- PROFILE CARD -->
+            <div class="card">
+                <h3>Profile</h3>
 
+                <div class="profile-row">
+                    <img src="{% static 'img/profile.png' %}" class="profile-img" id="profileImg">
+
+                    <div>
+                        <strong>John Doe</strong>
+                        <p class="muted">john@example.com</p>
+
+                        <button class="btn-outline" id="editProfileBtn">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECURITY -->
+            <div class="card">
+                <h3>Security</h3>
+                <button class="btn-outline" id="changePassBtn">
+                    Change Password
+                </button>
+            </div>
+
+            <!-- PREFERENCES -->
+            <div class="card">
+                <h3>Preferences</h3>
+                <div class="row">
+                    <span>Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- LOGOUT -->
+            <div class="card danger">
+                <button class="btn-danger">Logout</button>
+            </div>
+
+        </div>
     </main>
 </div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal" id="profileModal">
+    <div class="modal-box">
+        <h3>Edit Profile</h3>
+
+        <img src="{% static 'img/profile.png' %}" class="modal-img" id="profilePreview">
+
+        <input type="file" id="profileUpload" accept="image/png,image/jpeg">
+        <small>PNG / JPG — Max 2MB</small>
+
+        <input type="text" value="John Doe">
+        <input type="email" value="john@example.com">
+
+        <div class="modal-actions">
+            <button class="btn-outline closeModal">Cancel</button>
+            <button class="btn-primary">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal" id="passwordModal">
+    <div class="modal-box">
+        <h3>Change Password</h3>
+
+        <input type="password" placeholder="Current Password">
+        <input type="password" placeholder="New Password">
+        <input type="password" placeholder="Confirm New Password">
+
+        <div class="modal-actions">
+            <button class="btn-outline closeModal">Cancel</button>
+            <button class="btn-primary">Update Password</button>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/setting.js' %}"></script>
+<script src="{% static 'js/theme.js' %}"></script>
 
 </body>
 </html>

@@ -6,14 +6,21 @@ from django.shortcuts import render
 def dashboard_view(request):
     return render(request, 'dash.html')
 
+def transaction_view(request):
+    return render(request, 'transaction.html')
+
 def category_view(request):
     return render(request, 'cat.html')
 
 def report_view(request):
     return render(request, 'report.html')
 
+def calculator_view(request):
+    return render(request, 'cal.html')
+
 def setting_view(request):
     return render(request, 'settings.html')
 
-def transaction_view(request):
-    return render(request, 'transaction.html')
+
+
+
