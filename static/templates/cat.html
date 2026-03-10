@@ -16,12 +16,13 @@
         <h2 class="logo">FinTracker</h2>
 
         <nav class="menu">
-            <a href="{%  url 'dashboard' %}">Dashboard</a>
-            <a href="{%  url 'transaction' %}">Transactions</a>
-            <a href="{%  url 'category' %}" class="active">Categories</a>
-            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}">Transactions</a>
+            <a href="{% url 'category' %}" class="active">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
-            <a href="{%  url 'setting' %}">Settings</a>
+            <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
 
@@ -34,319 +35,247 @@
     <!-- Main Content -->
     <main class="content">
 
-            <div class="page-intro">
-                <h2>Categories</h2>
-                <p>Manage your budget categories</p>
-            </div>
-
-            <section class="controls">
-                <div class="view-buttons">
-                    <button class="active" id="gridViewBtn">Grid</button>
-                    <button id="listViewBtn">List</button>
-                </div>
-                <button class="add-btn" id="addCategoryBtn">+ Add Category</button>
-            </section>
-
-            <!-- Grid View -->
-            <section class="category-grid" id="gridView">
-                <div class="category-card">
-                    <h3>🍔 Food</h3>
-                    <p>Includes groceries, dining out, and snacks.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>🚕 Travel</h3>
-                    <p>Taxi fares, fuel, public transport, and rideshares.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>🛒 Shopping</h3>
-                    <p>Clothes, accessories, and online shopping expenses.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>🏠 Housing</h3>
-                    <p>Rent, mortgage, property taxes, and home maintenance.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>💡 Utilities</h3>
-                    <p>Electricity, water, gas, internet, and phone bills.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>🎬 Entertainment</h3>
-                    <p>Movies, streaming services, concerts, and hobbies.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="category-card">
-                    <h3>🏥 Health</h3>
-                    <p>Medical checkups, medicines, and health insurance.</p>
-                    <div class="card-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- List View (hidden by default) -->
-            <section class="category-list" id="listView" style="display:none;">
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>🍔 Food</h3>
-                        <p>Includes groceries, dining out, and snacks.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>🚕 Travel</h3>
-                        <p>Taxi fares, fuel, public transport, and rideshares.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>🛒 Shopping</h3>
-                        <p>Clothes, accessories, and online shopping expenses.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>🏠 Housing</h3>
-                        <p>Rent, mortgage, and home maintenance.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>💡 Utilities</h3>
-                        <p>Electricity, water, gas, and internet bills.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div class="list-info">
-                        <h3>🎬 Entertainment</h3>
-                        <p>Streaming, movies, and hobbies.</p>
-                    </div>
-                    <div class="list-actions">
-                        <button>Edit</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <div id="addCategoryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create New Category</h3>
-                <span class="close" id="closeModal">&times;</span>
-            </div>
-
-            <form id="addCategoryForm">
-                <div class="form-group">
-                    <label for="categoryName">Name</label>
-                    <input type="text" id="categoryName" placeholder="e.g., Subscriptions" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Category Icon</label>
-                    <div class="icon-selection-container">
-                        <div class="preset-icons" id="presetIcons">
-                            <span class="icon-option active" data-icon="💰">💰</span>
-                            <span class="icon-option" data-icon="🎮">🎮</span>
-                            <span class="icon-option" data-icon="📚">📚</span>
-                            <span class="icon-option" data-icon="🏋️">🏋️</span>
-                            <span class="icon-option" data-icon="🎁">🎁</span>
-                            <span class="icon-option" data-icon="🍔">🍔</span>
-                        </div>
-                        <div class="upload-divider"><span>OR</span></div>
-                        <div class="custom-upload">
-                            <input type="file" id="categoryIconFile" accept="image/*" hidden>
-                            <button type="button" class="upload-trigger" id="uploadBtn">Upload Custom Icon</button>
-                            <div id="fileNameDisplay" style="font-size: 12px; color: #666; margin-top: 5px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="categoryDesc">Description</label>
-                    <textarea id="categoryDesc" placeholder="What is this for?" rows="1"></textarea>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                    <button type="submit" class="save-btn">Save Category</button>
-                </div>
-            </form>
+        <div class="page-intro">
+            <h2>Categories</h2>
+            <p>Manage your budget categories</p>
         </div>
+
+        {% if messages %}
+        <div class="messages" style="margin-bottom:15px;">
+            {% for message in messages %}
+            <div class="msg" style="padding:10px 16px;border-radius:10px;margin-bottom:6px;font-size:14px;
+                {% if message.tags == 'success' %}background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;{% else %}background:#fbe9e7;color:#c62828;border:1px solid #ef9a9a;{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section class="controls">
+            <div class="view-buttons">
+                <button class="active" id="gridViewBtn">Grid</button>
+                <button id="listViewBtn">List</button>
+            </div>
+            <button class="add-btn" id="addCategoryBtn">+ Add Category</button>
+        </section>
+
+        <!-- Grid View -->
+        <section class="category-grid" id="gridView">
+            {% for cat in categories %}
+            <div class="category-card">
+                <h3>{{ cat.icon }} {{ cat.name }}</h3>
+                <p>{{ cat.description|default:"No description" }}</p>
+                <div class="card-actions">
+                    <button onclick="openEditCatModal({{ cat.pk }}, '{{ cat.name|escapejs }}', '{{ cat.icon|escapejs }}', '{{ cat.description|escapejs }}')">Edit</button>
+                    <form method="POST" action="{% url 'delete_category' cat.pk %}" style="display:inline;" onsubmit="return confirm('Delete category &quot;{{ cat.name|escapejs }}&quot;?')">
+                        {% csrf_token %}
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="color:#999;grid-column:1/-1;text-align:center;padding:30px;">No categories yet. Add one!</p>
+            {% endfor %}
+        </section>
+
+        <!-- List View -->
+        <section class="category-list" id="listView" style="display:none;">
+            {% for cat in categories %}
+            <div class="list-card">
+                <div class="list-info">
+                    <h3>{{ cat.icon }} {{ cat.name }}</h3>
+                    <p>{{ cat.description|default:"No description" }}</p>
+                </div>
+                <div class="list-actions">
+                    <button onclick="openEditCatModal({{ cat.pk }}, '{{ cat.name|escapejs }}', '{{ cat.icon|escapejs }}', '{{ cat.description|escapejs }}')">Edit</button>
+                    <form method="POST" action="{% url 'delete_category' cat.pk %}" style="display:inline;" onsubmit="return confirm('Delete this category?')">
+                        {% csrf_token %}
+                        <button type="submit" class="delete">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="color:#999;text-align:center;padding:30px;">No categories yet. Add one!</p>
+            {% endfor %}
+        </section>
+
+    </main>
+</div>
+
+<!-- ===== ADD CATEGORY MODAL ===== -->
+<div id="addCategoryModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Create New Category</h3>
+            <span class="close" id="closeModal">&times;</span>
+        </div>
+
+        <form method="POST" action="{% url 'add_category' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="e.g., Subscriptions" required>
+            </div>
+
+            <div class="form-group">
+                <label>Category Icon</label>
+                <div class="icon-selection-container">
+                    <div class="preset-icons" id="presetIcons">
+                        <span class="icon-option active" data-icon="💰">💰</span>
+                        <span class="icon-option" data-icon="🎮">🎮</span>
+                        <span class="icon-option" data-icon="📚">📚</span>
+                        <span class="icon-option" data-icon="🏋️">🏋️</span>
+                        <span class="icon-option" data-icon="🎁">🎁</span>
+                        <span class="icon-option" data-icon="🍔">🍔</span>
+                        <span class="icon-option" data-icon="🚕">🚕</span>
+                        <span class="icon-option" data-icon="🛒">🛒</span>
+                        <span class="icon-option" data-icon="🏠">🏠</span>
+                        <span class="icon-option" data-icon="💡">💡</span>
+                        <span class="icon-option" data-icon="🎬">🎬</span>
+                        <span class="icon-option" data-icon="🏥">🏥</span>
+                    </div>
+                    <input type="hidden" name="icon" id="selectedIcon" value="💰">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" placeholder="What is this for?" rows="2"></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                <button type="submit" class="save-btn">Save Category</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <script>
-        // Toggle Grid/List Views
-        const gridBtn = document.getElementById('gridViewBtn');
-        const listBtn = document.getElementById('listViewBtn');
-        const gridView = document.getElementById('gridView');
-        const listView = document.getElementById('listView');
+<!-- ===== EDIT CATEGORY MODAL ===== -->
+<div id="editCategoryModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edit Category</h3>
+            <span class="close" id="closeEditModal">&times;</span>
+        </div>
 
-        gridBtn.addEventListener('click', () => {
-            gridView.style.display = 'grid';
-            listView.style.display = 'none';
-            gridBtn.classList.add('active');
-            listBtn.classList.remove('active');
-        });
+        <form method="POST" id="editCatForm" action="">
+            {% csrf_token %}
 
-        listBtn.addEventListener('click', () => {
-            gridView.style.display = 'none';
-            listView.style.display = 'block';
-            listBtn.classList.add('active');
-            gridBtn.classList.remove('active');
-        });
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" id="editCatName" required>
+            </div>
 
-        // --- New Modal Code ---
-        const modal = document.getElementById('addCategoryModal');
-        const openModalBtn = document.getElementById('addCategoryBtn');
-        const closeModalX = document.getElementById('closeModal');
-        const cancelBtn = document.getElementById('cancelBtn');
+            <div class="form-group">
+                <label>Category Icon</label>
+                <div class="icon-selection-container">
+                    <div class="preset-icons" id="editPresetIcons">
+                        <span class="icon-option" data-icon="💰">💰</span>
+                        <span class="icon-option" data-icon="🎮">🎮</span>
+                        <span class="icon-option" data-icon="📚">📚</span>
+                        <span class="icon-option" data-icon="🏋️">🏋️</span>
+                        <span class="icon-option" data-icon="🎁">🎁</span>
+                        <span class="icon-option" data-icon="🍔">🍔</span>
+                        <span class="icon-option" data-icon="🚕">🚕</span>
+                        <span class="icon-option" data-icon="🛒">🛒</span>
+                        <span class="icon-option" data-icon="🏠">🏠</span>
+                        <span class="icon-option" data-icon="💡">💡</span>
+                        <span class="icon-option" data-icon="🎬">🎬</span>
+                        <span class="icon-option" data-icon="🏥">🏥</span>
+                    </div>
+                    <input type="hidden" name="icon" id="editSelectedIcon" value="💰">
+                </div>
+            </div>
 
-        // Open Modal
-        openModalBtn.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" id="editCatDesc" rows="2"></textarea>
+            </div>
 
-        // Close Modal functions
-        const closeModal = () => {
-            modal.style.display = 'none';
-        };
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelEditBtn">Cancel</button>
+                <button type="submit" class="save-btn">Update Category</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-        closeModalX.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
+<script>
+/* ---- GRID / LIST TOGGLE ---- */
+const gridBtn = document.getElementById('gridViewBtn');
+const listBtn = document.getElementById('listViewBtn');
+const gridView = document.getElementById('gridView');
+const listView = document.getElementById('listView');
 
-        // Close if user clicks outside the modal content
-        window.addEventListener('click', (event) => {
-            if (event.target == modal) {
-                closeModal();
-            }
-        });
+gridBtn.addEventListener('click', () => {
+    gridView.style.display = 'grid';
+    listView.style.display = 'none';
+    gridBtn.classList.add('active');
+    listBtn.classList.remove('active');
+});
 
-        // Handle Form Submission
-        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+listBtn.addEventListener('click', () => {
+    gridView.style.display = 'none';
+    listView.style.display = 'block';
+    listBtn.classList.add('active');
+    gridBtn.classList.remove('active');
+});
 
-            const name = document.getElementById('categoryName').value;
-            const icon = document.getElementById('categoryIcon').value;
-            const color = document.getElementById('categoryColor').value;
+/* ---- ADD MODAL ---- */
+const addModal = document.getElementById('addCategoryModal');
+document.getElementById('addCategoryBtn').addEventListener('click', () => addModal.style.display = 'block');
+document.getElementById('closeModal').addEventListener('click', () => addModal.style.display = 'none');
+document.getElementById('cancelBtn').addEventListener('click', () => addModal.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === addModal) addModal.style.display = 'none'; });
 
-            // This is where you would normally send data to your Django backend
-            console.log("New Category Added:", { name, icon, color });
+/* Icon selection (add) */
+const presetIcons = document.querySelectorAll('#presetIcons .icon-option');
+const selectedIconInput = document.getElementById('selectedIcon');
+presetIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        presetIcons.forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        selectedIconInput.value = icon.getAttribute('data-icon');
+    });
+});
 
-            alert(`Category "${name}" added successfully!`);
-            closeModal();
-            e.target.reset(); // Clear form for next time
-        });
+/* ---- EDIT MODAL ---- */
+const editModal = document.getElementById('editCategoryModal');
+const editPresetIcons = document.querySelectorAll('#editPresetIcons .icon-option');
+const editSelectedIconInput = document.getElementById('editSelectedIcon');
 
-        const descArea = document.getElementById('categoryDesc');
-        const presetIcons = document.querySelectorAll('.icon-option');
-        const fileInput = document.getElementById('categoryIconFile');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
+editPresetIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        editPresetIcons.forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        editSelectedIconInput.value = icon.getAttribute('data-icon');
+    });
+});
 
-        let selectedIcon = "💰"; // Default
+document.getElementById('closeEditModal').addEventListener('click', () => editModal.style.display = 'none');
+document.getElementById('cancelEditBtn').addEventListener('click', () => editModal.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === editModal) editModal.style.display = 'none'; });
 
-        // 1. Auto-Resize Description
-        descArea.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
+function openEditCatModal(pk, name, icon, desc) {
+    document.getElementById('editCatForm').action = '/categories/edit/' + pk + '/';
+    document.getElementById('editCatName').value = name;
+    document.getElementById('editCatDesc').value = desc;
+    editSelectedIconInput.value = icon;
 
-        // 2. Handle Preset Icon Selection
-        presetIcons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                presetIcons.forEach(i => i.classList.remove('active'));
-                icon.classList.add('active');
-                selectedIcon = icon.getAttribute('data-icon');
-                fileInput.value = ""; // Clear file if emoji is picked
-                fileNameDisplay.innerText = "";
-            });
-        });
+    editPresetIcons.forEach(i => {
+        i.classList.toggle('active', i.getAttribute('data-icon') === icon);
+    });
 
-        // 3. Handle File Upload Trigger
-        uploadBtn.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                presetIcons.forEach(i => i.classList.remove('active'));
-                selectedIcon = "custom-file";
-                fileNameDisplay.innerText = "Selected: " + e.target.files[0].name;
-            }
-        });
-
-        // 4. Form Submit
-        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('categoryName').value,
-                description: descArea.value,
-                icon: selectedIcon === "custom-file" ? fileInput.files[0] : selectedIcon
-            };
-            console.log("Saving Category Data:", data);
-            alert("Category Saved!");
-            modal.style.display = 'none';
-            e.target.reset();
-            descArea.style.height = 'auto';
-        });
-
-    </script>
+    editModal.style.display = 'block';
+}
+</script>
 
 <script src="{% static 'js/theme.js' %}"></script>
+
+</body>
+</html>
 
 </body>
 </html>

@@ -24,6 +24,7 @@
             <a href="{%  url 'category' %}">Categories</a>
             <a href="{%  url 'report' %}" class="active">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
+            <a href="{% url 'alert' %}">Alerts</a>
             <a href="{%  url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
@@ -75,6 +76,25 @@
 
 <!-- Hidden canvas for image export -->
 <canvas id="exportCanvas" style="display:none;" width="800" height="500"></canvas>
+
+<div id="reportDataHolder"
+     data-month-labels='{{ month_labels|safe }}'
+     data-month-expense='{{ month_expense_data|safe }}'
+     data-month-income='{{ month_income_data|safe }}'
+     data-cat-labels='{{ cat_labels|safe }}'
+     data-cat-data='{{ cat_data|safe }}'
+     style="display:none;"></div>
+
+<script>
+    var el = document.getElementById('reportDataHolder');
+    var REPORT_DATA = {
+        monthLabels: JSON.parse(el.dataset.monthLabels),
+        monthExpense: JSON.parse(el.dataset.monthExpense),
+        monthIncome: JSON.parse(el.dataset.monthIncome),
+        catLabels: JSON.parse(el.dataset.catLabels),
+        catData: JSON.parse(el.dataset.catData),
+    };
+</script>
 
 <script src="{% static 'js/report.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>

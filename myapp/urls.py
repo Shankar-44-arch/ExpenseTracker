@@ -12,10 +12,26 @@ urlpatterns = [
     path('transaction/', transaction_view, name='transaction'),
     path('calculator/', calculator_view, name='calculator'),
 
+    # Transaction CRUD
+    path('transaction/add/', add_transaction, name='add_transaction'),
+    path('transaction/edit/<int:pk>/', edit_transaction, name='edit_transaction'),
+    path('transaction/delete/<int:pk>/', delete_transaction, name='delete_transaction'),
+
+    # Category CRUD
+    path('categories/add/', add_category, name='add_category'),
+    path('categories/edit/<int:pk>/', edit_category, name='edit_category'),
+    path('categories/delete/<int:pk>/', delete_category, name='delete_category'),
+
     # Settings actions
     path('setting/update-profile/', update_profile, name='update_profile'),
     path('setting/change-password/', change_password, name='change_password'),
     path('setting/delete-account/', delete_account, name='delete_account'),
+
+    # Alerts
+    path('alerts/', alert_view, name='alert'),
+    path('alerts/add/', add_alert, name='add_alert'),
+    path('alerts/edit/<int:pk>/', edit_alert, name='edit_alert'),
+    path('alerts/delete/<int:pk>/', delete_alert, name='delete_alert'),
 
     # Report exports
     path('report/export/csv/', export_csv, name='export_csv'),

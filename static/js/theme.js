@@ -25,3 +25,18 @@ function toggleDarkMode(checkbox) {
         localStorage.setItem("darkMode", "disabled");
     }
 }
+
+// ================= AUTO-DISMISS MESSAGES =================
+
+document.addEventListener("DOMContentLoaded", function () {
+    var msgs = document.querySelectorAll(".messages");
+    if (!msgs.length) return;
+
+    msgs.forEach(function (container) {
+        container.style.transition = "opacity 0.5s ease";
+        setTimeout(function () {
+            container.style.opacity = "0";
+            setTimeout(function () { container.remove(); }, 500);
+        }, 5000);
+    });
+});

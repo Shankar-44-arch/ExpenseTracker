@@ -28,14 +28,16 @@ const options = {
     }
 };
 
+const D = typeof CHART_DATA !== 'undefined' ? CHART_DATA : {};
+
 /* Monthly Trend */
 new Chart(monthlyChart, {
     type: 'line',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: D.monthLabels || [],
         datasets: [{
             label: 'Expense',
-            data: [4000, 5200, 4800, 6100, 5600, 5000],
+            data: D.monthExpense || [],
             borderColor: '#f44336',
             tension: 0.4
         }]
@@ -44,13 +46,14 @@ new Chart(monthlyChart, {
 });
 
 /* Expense Category */
+const pieColors = ['#FF6384','#4CAF50','#2196F3','#FF9800','#9C27B0','#00BCD4','#795548','#607D8B'];
 new Chart(expenseChart, {
     type: 'pie',
     data: {
-        labels: ['Food', 'Rent', 'Travel', 'Shopping'],
+        labels: D.catLabels || [],
         datasets: [{
-            data: [8000, 12000, 3500, 5000],
-            backgroundColor: ['#FF6384', '#4CAF50', '#2196F3', '#FF9800']
+            data: D.catData || [],
+            backgroundColor: pieColors.slice(0, (D.catLabels || []).length)
         }]
     },
     options
@@ -60,16 +63,16 @@ new Chart(expenseChart, {
 new Chart(incomeExpenseChart, {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        labels: D.monthLabels || [],
         datasets: [
             {
                 label: 'Income',
-                data: [35000, 36000, 34000, 38000, 37000],
+                data: D.monthIncome || [],
                 backgroundColor: '#4CAF50'
             },
             {
                 label: 'Expense',
-                data: [22000, 24000, 23000, 26000, 25000],
+                data: D.monthExpense || [],
                 backgroundColor: '#f44336'
             }
         ]

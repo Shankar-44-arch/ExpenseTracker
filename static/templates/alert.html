@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Alerts</title>
+    <link rel="stylesheet" href="{% static 'css/alert1.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}">Transactions</a>
+            <a href="{% url 'category' %}">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
+            <a href="{% url 'alert' %}" class="active">Alerts</a>
+            <a href="{% url 'setting' %}">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>{{ request.user.username }}</strong></p>
+            <small>{{ request.user.email }}</small>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <div class="page-intro">
+            <h2>Budget Alerts</h2>
+            <p>Set spending limits for each category and get warned when you exceed them</p>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="msg {% if message.tags == 'success' %}msg-success{% else %}msg-error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section class="controls">
+            <button class="add-btn" id="addAlertBtn">+ Set Budget Limit</button>
+        </section>
+
+        <!-- Alerts List -->
+        <section class="alert-grid">
+            {% for item in alert_list %}
+            <div class="alert-card {% if item.exceeded %}exceeded{% endif %}">
+                <div class="alert-header">
+                    <h3>{{ item.obj.category }}</h3>
+                    <span class="alert-badge {% if item.exceeded %}over{% else %}safe{% endif %}">
+                        {% if item.exceeded %}Over Limit{% else %}On Track{% endif %}
+                    </span>
+                </div>
+
+                <div class="alert-details">
+                    <div class="detail-row">
+                        <span>Limit</span>
+                        <strong>₹{{ item.obj.limit_amount|floatformat:0 }}</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Spent this month</span>
+                        <strong class="{% if item.exceeded %}text-red{% else %}text-green{% endif %}">₹{{ item.spent|floatformat:0 }}</strong>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill {% if item.exceeded %}bar-red{% else %}bar-green{% endif %}" data-percent="{{ item.percent }}"></div>
+                </div>
+                <small class="progress-label">{{ item.percent }}% used</small>
+
+                <div class="card-actions">
+                    <button class="edit-alert-btn" data-pk="{{ item.obj.pk }}" data-category="{{ item.obj.category|escapejs }}" data-limit="{{ item.obj.limit_amount }}">Edit</button>
+                    <form method="POST" action="{% url 'delete_alert' item.obj.pk %}" class="inline-form">
+                        {% csrf_token %}
+                        <button type="submit" class="delete" data-category="{{ item.obj.category|escapejs }}">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p class="empty-msg">No budget alerts set yet. Click "+ Set Budget Limit" to add one.</p>
+            {% endfor %}
+        </section>
+
+    </main>
+</div>
+
+<!-- Add Alert Modal -->
+<div class="modal-overlay" id="addAlertModal">
+    <div class="modal">
+        <h3>Set Budget Limit</h3>
+        <form method="POST" action="{% url 'add_alert' %}">
+            {% csrf_token %}
+            <label>Category</label>
+            <select name="category" required>
+                <option value="">Select category</option>
+                {% for cat in categories %}
+                <option value="{{ cat.name }}">{{ cat.icon }} {{ cat.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Monthly Limit (₹)</label>
+            <input type="number" name="limit_amount" min="1" step="1" required placeholder="e.g. 5000">
+
+            <div class="modal-actions">
+                <button type="submit" class="save-btn">Set Limit</button>
+                <button type="button" class="cancel-btn" onclick="closeModal('addAlertModal')">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Alert Modal -->
+<div class="modal-overlay" id="editAlertModal">
+    <div class="modal">
+        <h3>Edit Budget Limit</h3>
+        <form method="POST" id="editAlertForm">
+            {% csrf_token %}
+            <label>Category</label>
+            <input type="text" id="editAlertCategory" disabled>
+
+            <label>Monthly Limit (₹)</label>
+            <input type="number" name="limit_amount" id="editAlertLimit" min="1" step="1" required>
+
+            <div class="modal-actions">
+                <button type="submit" class="save-btn">Update</button>
+                <button type="button" class="cancel-btn" onclick="closeModal('editAlertModal')">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Set progress bar widths from data attributes
+    document.querySelectorAll('.progress-fill').forEach(function(bar) {
+        bar.style.width = bar.dataset.percent + '%';
+    });
+
+    // Add Alert modal
+    document.getElementById('addAlertBtn').addEventListener('click', function() {
+        document.getElementById('addAlertModal').classList.add('active');
+    });
+
+    // Edit Alert modal via data attributes
+    document.querySelectorAll('.edit-alert-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('editAlertCategory').value = btn.dataset.category;
+            document.getElementById('editAlertLimit').value = btn.dataset.limit;
+            document.getElementById('editAlertForm').action = '/alerts/edit/' + btn.dataset.pk + '/';
+            document.getElementById('editAlertModal').classList.add('active');
+        });
+    });
+
+    // Delete confirmation via data attributes
+    document.querySelectorAll('.card-actions .inline-form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            var cat = form.querySelector('.delete').dataset.category;
+            if (!confirm('Remove alert for "' + cat + '"?')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    // Close modal when clicking overlay
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) overlay.classList.remove('active');
+        });
+    });
+</script>
+
+<script src="{% static 'js/theme.js' %}"></script>
+
+</body>
+</html>

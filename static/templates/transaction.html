@@ -18,10 +18,11 @@
         <nav class="menu">
             <a href="{% url 'dashboard' %}">Dashboard</a>
             <a href="{% url 'transaction' %}" class="active">Transactions</a>
-            <a href="{%  url 'category' %}">Categories</a>
-            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'category' %}">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
-            <a href="{%  url 'setting' %}">Settings</a>
+            <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
 
@@ -34,237 +35,244 @@
     <!-- Main -->
     <main class="content">
 
-            <div class="page-intro">
-                <h2>Transactions</h2>
-                <p>Track all your income and expenses</p>
+        <div class="page-intro">
+            <h2>Transactions</h2>
+            <p>Track all your income and expenses</p>
+        </div>
+
+        {% if messages %}
+        <div class="messages" style="margin-bottom:15px;">
+            {% for message in messages %}
+            <div class="msg msg-{{ message.tags }}" style="padding:10px 16px;border-radius:10px;margin-bottom:6px;font-size:14px;
+                {% if message.tags == 'success' %}background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;{% else %}background:#fbe9e7;color:#c62828;border:1px solid #ef9a9a;{% endif %}">
+                {{ message }}
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-            <section class="filters">
-                <input type="text" placeholder="Search">
-                <select>
-                    <option>All Categories</option>
-                    <option>Food</option>
-                    <option>Travel</option>
+        <section class="filters">
+            <form method="GET" action="{% url 'transaction' %}" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;width:100%;">
+                <input type="text" name="search" placeholder="Search" value="{{ search }}">
+                <select name="category">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.name }}" {% if cat_filter == cat.name %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
                 </select>
-                <select>
-                    <option>All Time</option>
-                    <option>Today</option>
-                    <option>This Month</option>
+                <select name="time">
+                    <option value="" {% if not time_filter %}selected{% endif %}>All Time</option>
+                    <option value="today" {% if time_filter == 'today' %}selected{% endif %}>Today</option>
+                    <option value="month" {% if time_filter == 'month' %}selected{% endif %}>This Month</option>
                 </select>
-                <button class="add-btn">+ Add Transaction</button>
-            </section>
+                <button type="submit" class="filter-btn">Filter</button>
+            </form>
+            <button class="add-btn" id="openAddModal">+ Add Transaction</button>
+        </section>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Groceries</td>
-                        <td>Food</td>
-                        <td>22/05/2025</td>
-                        <td>₹200</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Groceries</td>
-                        <td>Food</td>
-                        <td>22/05/2025</td>
-                        <td>₹200</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for txn in transactions %}
+                <tr>
+                    <td>{{ txn.description }}</td>
+                    <td>{{ txn.category }}</td>
+                    <td>{{ txn.date|date:"d/m/Y" }}</td>
+                    <td class="{{ txn.transaction_type }}">
+                        {% if txn.transaction_type == 'income' %}+{% else %}-{% endif %}₹{{ txn.amount|floatformat:0 }}
+                    </td>
+                    <td>
+                        <button class="edit" onclick="openEditModal({{ txn.pk }}, '{{ txn.description|escapejs }}', '{{ txn.category|escapejs }}', '{{ txn.amount }}', '{{ txn.date|date:'Y-m-d' }}', '{{ txn.transaction_type }}')">Edit</button>
+                        <form method="POST" action="{% url 'delete_transaction' txn.pk %}" style="display:inline;" onsubmit="return confirm('Delete this transaction?')">
+                            {% csrf_token %}
+                            <button type="submit" class="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" style="text-align:center;color:#999;padding:30px;">No transactions yet. Add one!</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-                    <tr>
-                        <td>Bus Ticket</td>
-                        <td>Travel</td>
-                        <td>21/05/2025</td>
-                        <td>₹50</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Electricity Bill</td>
-                        <td>Bills</td>
-                        <td>20/05/2025</td>
-                        <td>₹1,200</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Restaurant</td>
-                        <td>Food</td>
-                        <td>19/05/2025</td>
-                        <td>₹650</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Movie Ticket</td>
-                        <td>Entertainment</td>
-                        <td>18/05/2025</td>
-                        <td>₹300</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Fuel</td>
-                        <td>Transport</td>
-                        <td>17/05/2025</td>
-                        <td>₹1,500</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Salary</td>
-                        <td>Income</td>
-                        <td>01/05/2025</td>
-                        <td>₹35,000</td>
-                        <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
-
-        </main>
+    </main>
 </div>
+
 <!-- ===== ADD TRANSACTION MODAL ===== -->
 <div class="modal" id="transactionModal">
     <div class="modal-content">
         <h3>Add Transaction</h3>
 
-        <!-- Type Switch -->
         <div class="type-switch">
-            <button id="expenseBtn" class="active" onclick="showExpense()">Expense</button>
-            <button id="incomeBtn" onclick="showIncome()">Income</button>
+            <button id="expenseBtn" class="active" type="button" onclick="showExpense()">Expense</button>
+            <button id="incomeBtn" type="button" onclick="showIncome()">Income</button>
         </div>
 
-        <!-- FORM -->
-        <form>
+        <form method="POST" action="{% url 'add_transaction' %}">
+            {% csrf_token %}
+            <input type="hidden" name="transaction_type" id="txnType" value="expense">
 
-            <!-- CATEGORY -->
             <div class="form-group">
                 <label>Category</label>
-                <select id="category">
-                    <option>Food</option>
-                    <option>Travel</option>
-                    <option>Bills</option>
-                    <option>Entertainment</option>
+                <select name="category" id="category">
+                    {% for cat in categories %}
+                    <option value="{{ cat.name }}">{{ cat.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
-            <!-- AMOUNT -->
             <div class="form-group">
                 <label>Amount</label>
-                <input type="number" placeholder="Enter amount" min="0" step="1" id="amount">
+                <input type="number" name="amount" placeholder="Enter amount" min="1" step="1" id="amount" required>
             </div>
 
-            <!-- DATE -->
             <div class="form-group">
                 <label>Date</label>
-                <input type="date">
+                <input type="date" name="date" required>
             </div>
 
-            <!-- DESCRIPTION -->
             <div class="form-group">
                 <label>Description</label>
-                <textarea placeholder="Description"></textarea>
+                <textarea name="description" placeholder="Description" required></textarea>
             </div>
 
-            <!-- ACTIONS -->
             <div class="modal-actions">
                 <button type="button" class="cancel" onclick="closeModal()">Cancel</button>
                 <button type="submit" class="save">Save</button>
             </div>
-
         </form>
     </div>
 </div>
+
+<!-- ===== EDIT TRANSACTION MODAL ===== -->
+<div class="modal" id="editModal">
+    <div class="modal-content">
+        <h3>Edit Transaction</h3>
+
+        <div class="type-switch">
+            <button id="editExpenseBtn" class="active" type="button" onclick="editShowExpense()">Expense</button>
+            <button id="editIncomeBtn" type="button" onclick="editShowIncome()">Income</button>
+        </div>
+
+        <form method="POST" id="editForm" action="">
+            {% csrf_token %}
+            <input type="hidden" name="transaction_type" id="editTxnType" value="expense">
+
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" id="editCategory">
+                    {% for cat in categories %}
+                    <option value="{{ cat.name }}">{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" name="amount" id="editAmount" min="1" step="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" name="date" id="editDate" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" id="editDesc" required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="save">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
+/* ---- ADD MODAL ---- */
 const modal = document.getElementById("transactionModal");
-const category = document.getElementById("category");
+const categorySelect = document.getElementById("category");
 const expenseBtn = document.getElementById("expenseBtn");
 const incomeBtn = document.getElementById("incomeBtn");
+const txnType = document.getElementById("txnType");
 
-/* Open modal */
-document.querySelector(".add-btn").onclick = () => {
-    modal.style.display = "flex";
-};
+const categoryOptions = categorySelect.innerHTML;
 
-/* Close modal */
-function closeModal() {
-    modal.style.display = "none";
-}
+document.getElementById("openAddModal").onclick = () => modal.style.display = "flex";
+function closeModal() { modal.style.display = "none"; }
 
-/* Expense mode */
+modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+
 function showExpense() {
     expenseBtn.classList.add("active");
     incomeBtn.classList.remove("active");
-
-    category.disabled = false;
-    category.innerHTML = `
-        <option>Food</option>
-        <option>Travel</option>
-        <option>Bills</option>
-        <option>Entertainment</option>
-    `;
+    txnType.value = "expense";
+    categorySelect.innerHTML = categoryOptions;
+    categorySelect.disabled = false;
 }
 
-/* Income mode */
 function showIncome() {
     incomeBtn.classList.add("active");
     expenseBtn.classList.remove("active");
-
-    category.innerHTML = `<option>Income</option>`;
-    category.disabled = true;
+    txnType.value = "income";
+    categorySelect.innerHTML = '<option value="Income">Income</option>';
+    categorySelect.disabled = true;
 }
 
-const amountInput = document.getElementById("amount");
+/* ---- EDIT MODAL ---- */
+const editModal = document.getElementById("editModal");
+const editForm = document.getElementById("editForm");
+const editCategory = document.getElementById("editCategory");
+const editCategoryOptions = editCategory.innerHTML;
 
-/* Prevent typing negative values */
-amountInput.addEventListener("input", () => {
-    if (amountInput.value < 0) {
-        amountInput.value = 0;
-    }
-});
+function openEditModal(pk, desc, cat, amount, date, type) {
+    editForm.action = "/transaction/edit/" + pk + "/";
+    document.getElementById("editDesc").value = desc;
+    document.getElementById("editAmount").value = parseFloat(amount);
+    document.getElementById("editDate").value = date;
+    document.getElementById("editTxnType").value = type;
 
-/* Optional: Prevent form submit if amount is invalid */
-document.querySelector(".modal-content form").addEventListener("submit", (e) => {
-    if (amountInput.value <= 0) {
-        alert("Amount must be greater than zero");
-        e.preventDefault();
+    if (type === 'income') {
+        editShowIncome();
+    } else {
+        editShowExpense();
+        editCategory.value = cat;
     }
+    editModal.style.display = "flex";
+}
+
+function closeEditModal() { editModal.style.display = "none"; }
+editModal.addEventListener("click", e => { if (e.target === editModal) closeEditModal(); });
+
+function editShowExpense() {
+    document.getElementById("editExpenseBtn").classList.add("active");
+    document.getElementById("editIncomeBtn").classList.remove("active");
+    document.getElementById("editTxnType").value = "expense";
+    editCategory.innerHTML = editCategoryOptions;
+    editCategory.disabled = false;
+}
+
+function editShowIncome() {
+    document.getElementById("editIncomeBtn").classList.add("active");
+    document.getElementById("editExpenseBtn").classList.remove("active");
+    document.getElementById("editTxnType").value = "income";
+    editCategory.innerHTML = '<option value="Income">Income</option>';
+    editCategory.disabled = true;
+}
+
+/* Prevent negative amounts */
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+    inp.addEventListener("input", () => { if (inp.value < 0) inp.value = 0; });
 });
 </script>
 

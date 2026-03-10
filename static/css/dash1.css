@@ -96,6 +96,49 @@ th {
     color: red;
 }
 
+/* ================= BUDGET WARNINGS ================= */
+
+.budget-warnings {
+    background: #fff3e0;
+    border: 1px solid #ffcc80;
+    border-left: 5px solid #f44336;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+}
+
+.budget-warnings h3 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: #e65100;
+}
+
+.warning-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #ffe0b2;
+    font-size: 14px;
+}
+
+.warning-item:last-child {
+    border-bottom: none;
+}
+
+.warning-cat {
+    font-weight: 600;
+    color: #bf360c;
+}
+
+.warning-detail {
+    color: #d84315;
+}
+
+.warning-detail strong {
+    color: #c62828;
+}
+
 /* ================= DARK MODE ================= */
 
 body.dark .card {
@@ -129,6 +172,32 @@ body.dark .income {
 }
 
 body.dark .expense {
+    color: #ef5350;
+}
+
+body.dark .budget-warnings {
+    background: #2a1a1a;
+    border-color: #5d3a3a;
+    border-left-color: #ef5350;
+}
+
+body.dark .budget-warnings h3 {
+    color: #ff8a65;
+}
+
+body.dark .warning-item {
+    border-bottom-color: #3d2a2a;
+}
+
+body.dark .warning-cat {
+    color: #ef9a9a;
+}
+
+body.dark .warning-detail {
+    color: #ef9a9a;
+}
+
+body.dark .warning-detail strong {
     color: #ef5350;
 }
 

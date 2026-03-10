@@ -4,6 +4,8 @@
     display: flex;
     gap: 15px;
     margin-bottom: 25px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .filters input,
@@ -12,6 +14,22 @@
     border-radius: 8px;
     border: 1px solid #ccc;
 }
+
+.filter-btn {
+    padding: 8px 18px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background: #388E3C;
+}
+
+td.income { color: #4CAF50; font-weight: 600; }
+td.expense { color: #f44336; font-weight: 600; }
 
 table {
     width: 100%;
@@ -268,3 +286,10 @@ body.dark td .edit {
 body.dark td .delete {
     background: #c62828;
 }
+
+body.dark .filter-btn {
+    background: #388E3C;
+}
+
+body.dark td.income { color: #66BB6A; }
+body.dark td.expense { color: #ef5350; }

@@ -18,12 +18,13 @@
         <h2 class="logo">FinTracker</h2>
 
         <nav class="menu">
-            <a href="{%  url 'dashboard' %}" class="active">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="active">Dashboard</a>
             <a href="{% url 'transaction' %}">Transactions</a>
             <a href="{% url 'category' %}">Categories</a>
-            <a href="{%  url 'report' %}">Reports</a>
+            <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
-            <a href="{%  url 'setting' %}">Settings</a>
+            <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
 
@@ -46,17 +47,33 @@
         <div class="summary">
             <div class="card income">
                 <h4>Total Income</h4>
-                <p>₹45,000</p>
+                <p>₹{{ total_income|floatformat:0 }}</p>
             </div>
             <div class="card expense">
                 <h4>Total Expense</h4>
-                <p>₹28,500</p>
+                <p>₹{{ total_expense|floatformat:0 }}</p>
             </div>
             <div class="card savings">
                 <h4>Savings</h4>
-                <p>₹16,500</p>
+                <p>₹{{ savings|floatformat:0 }}</p>
             </div>
         </div>
+
+        <!-- BUDGET WARNINGS -->
+        {% if budget_warnings %}
+        <div class="budget-warnings">
+            <h3>⚠️ Budget Alerts</h3>
+            {% for w in budget_warnings %}
+            <div class="warning-item">
+                <span class="warning-cat">{{ w.category }}</span>
+                <span class="warning-detail">
+                    Spent ₹{{ w.spent|floatformat:0 }} / ₹{{ w.limit|floatformat:0 }} limit
+                    <strong>(₹{{ w.over|floatformat:0 }} over)</strong>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
         <!-- CHARTS -->
         <div class="chart-section">
@@ -92,30 +109,44 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for txn in recent %}
                     <tr>
-                        <td>Groceries</td>
-                        <td>Food</td>
-                        <td>10 Jun 2025</td>
-                        <td class="expense">-₹1,200</td>
+                        <td>{{ txn.description }}</td>
+                        <td>{{ txn.category }}</td>
+                        <td>{{ txn.date|date:"d M Y" }}</td>
+                        <td class="{{ txn.transaction_type }}">
+                            {% if txn.transaction_type == 'income' %}+{% else %}-{% endif %}₹{{ txn.amount|floatformat:0 }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>Salary</td>
-                        <td>Income</td>
-                        <td>01 Jun 2025</td>
-                        <td class="income">+₹35,000</td>
-                    </tr>
-                    <tr>
-                        <td>Electricity Bill</td>
-                        <td>Bills</td>
-                        <td>05 Jun 2025</td>
-                        <td class="expense">-₹2,000</td>
-                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" style="text-align:center;color:#999;padding:20px;">No transactions yet.</td></tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
 
     </main>
 </div>
+
+<!-- Pass chart data from Django to JS -->
+<div id="chartDataHolder"
+     data-month-labels='{{ month_labels|safe }}'
+     data-month-expense='{{ month_expense_data|safe }}'
+     data-month-income='{{ month_income_data|safe }}'
+     data-cat-labels='{{ cat_labels|safe }}'
+     data-cat-data='{{ cat_data|safe }}'
+     style="display:none;"></div>
+
+<script>
+    var el = document.getElementById('chartDataHolder');
+    var CHART_DATA = {
+        monthLabels: JSON.parse(el.dataset.monthLabels),
+        monthExpense: JSON.parse(el.dataset.monthExpense),
+        monthIncome: JSON.parse(el.dataset.monthIncome),
+        catLabels: JSON.parse(el.dataset.catLabels),
+        catData: JSON.parse(el.dataset.catData),
+    };
+</script>
 
 <script src="{% static 'js/dash.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>
