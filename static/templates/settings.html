@@ -22,6 +22,7 @@
             <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{% url 'setting' %}" class="active">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
     </div>
 
@@ -33,6 +34,14 @@
             <p>Manage your profile and security</p>
         </div>
 
+        {% if messages %}
+        <div class="messages" style="margin-bottom:20px;">
+            {% for message in messages %}
+            <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <div class="settings-grid">
 
             <!-- PROFILE CARD -->
@@ -40,11 +49,13 @@
                 <h3>Profile</h3>
 
                 <div class="profile-row">
-                    <img src="{% static 'img/profile.png' %}" class="profile-img" id="profileImg">
+                    <div class="profile-avatar">
+                        {{ request.user.username.0|upper }}
+                    </div>
 
                     <div>
-                        <strong>John Doe</strong>
-                        <p class="muted">john@example.com</p>
+                        <strong>{{ request.user.username }}</strong>
+                        <p class="muted">{{ request.user.email }}</p>
 
                         <button class="btn-outline" id="editProfileBtn">
                             Edit Profile
@@ -73,9 +84,11 @@
                 </div>
             </div>
 
-            <!-- LOGOUT -->
+            <!-- DANGER ZONE -->
             <div class="card danger">
-                <button class="btn-danger">Logout</button>
+                <h3>Danger Zone</h3>
+                <p class="muted" style="margin-bottom:12px;">Permanently delete your account and all data.</p>
+                <button class="btn-danger" id="deleteAccountBtn">Delete Account</button>
             </div>
 
         </div>
@@ -87,18 +100,30 @@
     <div class="modal-box">
         <h3>Edit Profile</h3>
 
-        <img src="{% static 'img/profile.png' %}" class="modal-img" id="profilePreview">
+        <form method="POST" action="{% url 'update_profile' %}">
+            {% csrf_token %}
 
-        <input type="file" id="profileUpload" accept="image/png,image/jpeg">
-        <small>PNG / JPG — Max 2MB</small>
+            <div class="profile-avatar modal-avatar">
+                {{ request.user.username.0|upper }}
+            </div>
 
-        <input type="text" value="John Doe">
-        <input type="email" value="john@example.com">
+            <label class="modal-label">Username</label>
+            <input type="text" name="username" value="{{ request.user.username }}" required>
 
-        <div class="modal-actions">
-            <button class="btn-outline closeModal">Cancel</button>
-            <button class="btn-primary">Save</button>
-        </div>
+            <label class="modal-label">First Name</label>
+            <input type="text" name="first_name" value="{{ request.user.first_name }}" placeholder="First name">
+
+            <label class="modal-label">Last Name</label>
+            <input type="text" name="last_name" value="{{ request.user.last_name }}" placeholder="Last name">
+
+            <label class="modal-label">Email</label>
+            <input type="email" name="email" value="{{ request.user.email }}" required>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-outline closeModal">Cancel</button>
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -107,14 +132,42 @@
     <div class="modal-box">
         <h3>Change Password</h3>
 
-        <input type="password" placeholder="Current Password">
-        <input type="password" placeholder="New Password">
-        <input type="password" placeholder="Confirm New Password">
+        <form method="POST" action="{% url 'change_password' %}">
+            {% csrf_token %}
 
-        <div class="modal-actions">
-            <button class="btn-outline closeModal">Cancel</button>
-            <button class="btn-primary">Update Password</button>
-        </div>
+            <label class="modal-label">Current Password</label>
+            <input type="password" name="current_password" placeholder="Enter current password" required>
+
+            <label class="modal-label">New Password</label>
+            <input type="password" name="new_password" placeholder="Enter new password" required>
+
+            <label class="modal-label">Confirm New Password</label>
+            <input type="password" name="confirm_password" placeholder="Confirm new password" required>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-outline closeModal">Cancel</button>
+                <button type="submit" class="btn-primary">Update Password</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- DELETE ACCOUNT MODAL -->
+<div class="modal" id="deleteModal">
+    <div class="modal-box">
+        <h3>Delete Account</h3>
+        <p style="margin-bottom:15px;color:#777;">This action is permanent. Enter your password to confirm.</p>
+
+        <form method="POST" action="{% url 'delete_account' %}">
+            {% csrf_token %}
+
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-outline closeModal">Cancel</button>
+                <button type="submit" class="btn-danger">Delete My Account</button>
+            </div>
+        </form>
     </div>
 </div>
 

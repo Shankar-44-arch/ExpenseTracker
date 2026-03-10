@@ -80,3 +80,44 @@
     font-weight: bold;
     color: #2e7d32;
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark .calc-box {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark #calc-display {
+    background: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark .calc-grid button {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+body.dark .calc-grid button:hover {
+    background: #1976D2;
+    color: white;
+}
+
+body.dark .equal {
+    background: #388E3C !important;
+    color: white;
+}
+
+body.dark .slider-group label {
+    color: #cfcfcf;
+}
+
+body.dark .result-box {
+    background: #1b5e20;
+}
+
+body.dark .result-box p {
+    color: #a5d6a7;
+}

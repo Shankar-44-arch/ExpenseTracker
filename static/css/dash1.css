@@ -96,3 +96,39 @@ th {
     color: red;
 }
 
+/* ================= DARK MODE ================= */
+
+body.dark .card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .chart-box {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark .transactions {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark th {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+body.dark td {
+    color: #cfcfcf;
+    border-bottom-color: #333;
+}
+
+body.dark .income {
+    color: #66BB6A;
+}
+
+body.dark .expense {
+    color: #ef5350;
+}
+

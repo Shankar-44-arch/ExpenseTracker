@@ -24,11 +24,12 @@
             <a href="{%  url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
 
         <div class="profile">
-            <p><strong>John Doe</strong></p>
-            <small>View profile</small>
+            <p><strong>{{ request.user.username }}</strong></p>
+            <small>{{ request.user.email }}</small>
         </div>
     </div>
 

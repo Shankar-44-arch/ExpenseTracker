@@ -1,12 +1,29 @@
+const isDark = document.body.classList.contains('dark');
+const textColor = isDark ? '#e0e0e0' : '#666';
+const gridColor = isDark ? '#333' : '#e0e0e0';
+
 const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-        legend: { position: 'bottom' },
+        legend: {
+            position: 'bottom',
+            labels: { color: textColor }
+        },
         tooltip: {
             callbacks: {
                 label: ctx => `₹${ctx.raw}`
             }
+        }
+    },
+    scales: {
+        x: {
+            ticks: { color: textColor },
+            grid: { color: gridColor }
+        },
+        y: {
+            ticks: { color: textColor },
+            grid: { color: gridColor }
         }
     }
 };

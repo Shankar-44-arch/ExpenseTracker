@@ -184,3 +184,87 @@ td .delete:hover {
     border-radius: 8px;
     cursor: pointer;
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark table {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark thead {
+    background: #1565C0;
+    color: white;
+}
+
+body.dark tbody tr {
+    border-bottom-color: #333;
+}
+
+body.dark tbody tr:hover {
+    background: #2a2a2a;
+}
+
+body.dark td {
+    color: #cfcfcf;
+}
+
+body.dark .filters input,
+body.dark .filters select {
+    background: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark .modal-content {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark .modal-content h3 {
+    color: #ffffff;
+}
+
+body.dark .type-switch button {
+    background: #2a2a2a;
+    color: #cfcfcf;
+}
+
+body.dark .type-switch .active {
+    background: #1565C0;
+    color: white;
+}
+
+body.dark .form-group label {
+    color: #cfcfcf;
+}
+
+body.dark .form-group input,
+body.dark .form-group select,
+body.dark .form-group textarea {
+    background: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark .cancel {
+    background: #333;
+    color: #cfcfcf;
+}
+
+body.dark .save {
+    background: #388E3C;
+    color: white;
+}
+
+body.dark .add-btn {
+    background: #1565C0;
+}
+
+body.dark td .edit {
+    background: #388E3C;
+}
+
+body.dark td .delete {
+    background: #c62828;
+}

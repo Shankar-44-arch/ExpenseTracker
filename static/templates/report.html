@@ -25,11 +25,12 @@
             <a href="{%  url 'report' %}" class="active">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{%  url 'setting' %}">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
 
         <div class="profile">
-            <p><strong>John Doe</strong></p>
-            <small>View profile</small>
+            <p><strong>{{ request.user.username }}</strong></p>
+            <small>{{ request.user.email }}</small>
         </div>
     </div>
 
@@ -65,14 +66,57 @@
         <div class="export-section">
             <h3>Export Reports</h3>
             <div class="export-buttons">
-                <button>Excel</button>
-                <button>CSV</button>
-                <button>PDF</button>
-                <button>Image</button>
+                <a href="{% url 'export_excel' %}"><button>Excel</button></a>
+                <a href="{% url 'export_csv' %}"><button>CSV</button></a>
+                <a href="{% url 'export_pdf' %}"><button>PDF</button></a>
+                <button id="exportImageBtn">Image</button>
             </div>
         </div>
+
+<!-- Hidden canvas for image export -->
+<canvas id="exportCanvas" style="display:none;" width="800" height="500"></canvas>
+
 <script src="{% static 'js/report.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>
+
+<script>
+document.getElementById('exportImageBtn').addEventListener('click', function () {
+    fetch("{% url 'export_image' %}")
+        .then(r => r.json())
+        .then(data => {
+            const canvas = document.getElementById('exportCanvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+
+            const colors = ['#4CAF50','#2196F3','#FF9800','#9C27B0','#F44336','#00BCD4','#795548','#607D8B'];
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: colors.slice(0, data.labels.length),
+                    }]
+                },
+                options: { animation: false, responsive: false },
+                plugins: [{
+                    id: 'downloadAfterRender',
+                    afterRender(chart) {
+                        setTimeout(() => {
+                            const link = document.createElement('a');
+                            link.download = 'expense_report.png';
+                            link.href = canvas.toDataURL('image/png');
+                            link.click();
+                            canvas.style.display = 'none';
+                            chart.destroy();
+                        }, 200);
+                    }
+                }]
+            });
+        });
+});
+</script>
 
     </main>
 </div>

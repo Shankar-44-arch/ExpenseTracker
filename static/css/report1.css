@@ -43,4 +43,25 @@
     color: white;
 }
 
+/* ================= DARK MODE ================= */
+
+body.dark .chart-box {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark .export-section {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark .export-buttons button {
+    background: #388E3C;
+    color: #ffffff;
+}
+
+body.dark .export-buttons button:hover {
+    background: #4CAF50;
+}
+
 

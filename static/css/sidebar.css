@@ -43,6 +43,17 @@ body {
     background: #4CAF50;
 }
 
+/* Logout link */
+.menu .logout-link {
+    margin-top: 20px;
+    color: #ef5350;
+}
+
+.menu .logout-link:hover {
+    background: #c62828;
+    color: white;
+}
+
 .profile {
     position: absolute;
     bottom: 20px;
@@ -83,30 +94,47 @@ body.dark .card,
 body.dark .modal-box,
 body.dark table {
     background: #1e1e1e;
-    color: #e7a6a6;
+    color: #e0e0e0;
 }
 
 /* Text */
 body.dark h1,
 body.dark h2,
-body.dark h3 {
-    color: #04da04;
+body.dark h3,
+body.dark h4 {
+    color: #ffffff;
 }
 
 body.dark p,
 body.dark span,
 body.dark label,
 body.dark small {
-    color: #d70c0c;
+    color: #cfcfcf;
+}
+
+/* Muted text */
+body.dark .muted {
+    color: #9e9e9e;
 }
 
 /* Inputs */
 body.dark input,
 body.dark select,
 body.dark textarea {
-    background: #e6e1e1;
-    color: rgb(31, 29, 29);
+    background: #2a2a2a;
+    color: #ffffff;
     border-color: #444;
+}
+
+body.dark input::placeholder,
+body.dark select::placeholder,
+body.dark textarea::placeholder {
+    color: #9e9e9e;
+}
+
+/* Page intro */
+body.dark .page-intro {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
 }
 
 /* Sidebar */
@@ -122,4 +150,32 @@ body.dark .menu a:hover,
 body.dark .menu .active {
     background: #4CAF50;
     color: #121212;
+}
+
+body.dark .menu .logout-link {
+    color: #ef5350;
+}
+
+body.dark .menu .logout-link:hover {
+    background: #c62828;
+    color: white;
+}
+
+/* Modal overlay */
+body.dark .modal {
+    background: rgba(0, 0, 0, 0.65);
+}
+
+/* Table rows */
+body.dark tr:hover {
+    background: #2a2a2a;
+}
+
+body.dark th {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+body.dark tbody tr {
+    border-bottom-color: #333;
 }

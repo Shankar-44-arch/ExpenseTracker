@@ -23,11 +23,70 @@
     align-items: center;
 }
 
+.profile-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #4CAF50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.modal-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin: 0 auto 12px;
+}
+
+.modal-label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 10px 0 4px;
+    color: #555;
+}
+
 .profile-img {
     width: 90px;
     height: 90px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+/* Messages */
+.messages {
+    text-align: center;
+}
+
+.msg {
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.msg-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.msg-error {
+    background: #fbe9e7;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* Danger zone */
+.card.danger {
+    border: 1px solid #f4433640;
 }
 
 .muted {
@@ -144,24 +203,13 @@
     margin-top: 15px;
 }
 
-/* Dark Mode */
-body.dark {
-    background: #121212;
-}
-
-body.dark .card,
-body.dark .modal-box {
-    background: #1e1e1e;
-    color: white;
-}
-
 /* Animation */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ================= DARK MODE TEXT FIX ================= */
+/* ================= DARK MODE ================= */
 
 body.dark {
     background: #121212;
@@ -207,6 +255,13 @@ body.dark input::placeholder {
     color: #9e9e9e;
 }
 
+/* Select */
+body.dark select {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #ffffff;
+}
+
 /* Buttons */
 body.dark .btn-outline {
     color: #4CAF50;
@@ -248,7 +303,7 @@ body.dark .page-intro {
     background: linear-gradient(135deg, #2e7d32, #1b5e20);
 }
 
-/* Tables / rows if any later */
+/* Tables / rows */
 body.dark tr:hover {
     background: #2a2a2a;
 }
@@ -256,5 +311,39 @@ body.dark tr:hover {
 /* Modal overlay */
 body.dark .modal {
     background: rgba(0, 0, 0, 0.65);
+}
+
+/* Switch slider */
+body.dark .slider {
+    background: #555;
+}
+
+/* Settings grid card borders */
+body.dark .settings-grid .card {
+    box-shadow: none;
+    border: 1px solid #333;
+}
+
+/* Modal labels */
+body.dark .modal-label {
+    color: #b0b0b0;
+}
+
+/* Messages */
+body.dark .msg-success {
+    background: #1b3a1d;
+    color: #81c784;
+    border-color: #2e7d32;
+}
+
+body.dark .msg-error {
+    background: #3a1b1b;
+    color: #ef9a9a;
+    border-color: #c62828;
+}
+
+/* Danger card */
+body.dark .card.danger {
+    border-color: #e5393540;
 }
 

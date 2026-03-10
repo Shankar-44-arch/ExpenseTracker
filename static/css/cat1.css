@@ -281,3 +281,133 @@ input[type="color"] {
     border-radius: 10px;
     cursor: pointer;
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark .category-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .category-card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .list-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .list-card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .list-info p {
+    color: #9e9e9e;
+}
+
+body.dark .view-buttons button {
+    background: #2a2a2a;
+    color: #cfcfcf;
+}
+
+body.dark .view-buttons .active {
+    background: #4CAF50;
+    color: #121212;
+}
+
+body.dark .add-btn {
+    background: #1565C0;
+}
+
+body.dark .modal-content {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .modal-header {
+    background: #2a2a2a;
+    border-bottom-color: #333;
+}
+
+body.dark .modal-header h3 {
+    color: #ffffff;
+}
+
+body.dark .close {
+    color: #cfcfcf;
+}
+
+body.dark .close:hover {
+    color: #ffffff;
+}
+
+body.dark label {
+    color: #cfcfcf;
+}
+
+body.dark input[type="text"],
+body.dark textarea,
+body.dark select {
+    background: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark input[type="color"] {
+    border-color: #444;
+}
+
+body.dark .modal-footer {
+    background: #2a2a2a;
+}
+
+body.dark .cancel-btn {
+    background: #333;
+    color: #cfcfcf;
+}
+
+body.dark .cancel-btn:hover {
+    background: #444;
+}
+
+body.dark .save-btn {
+    background: #1565C0;
+}
+
+body.dark .save-btn:hover {
+    background: #1976D2;
+}
+
+body.dark .icon-option {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+body.dark .icon-option:hover,
+body.dark .icon-option.active {
+    border-color: #1565C0;
+    background: #1a3a5c;
+}
+
+body.dark .upload-trigger {
+    background: #1e1e1e;
+    border-color: #1565C0;
+    color: #64B5F6;
+}
+
+body.dark .upload-divider {
+    color: #666;
+}
+
+body.dark .card-actions button {
+    color: #e0e0e0;
+}
+
+body.dark .delete {
+    background: #c62828;
+    color: white;
+}
