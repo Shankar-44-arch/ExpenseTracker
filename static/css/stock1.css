@@ -1,0 +1,296 @@
+@import url("sidebar.css");
+
+/* ===== PAGE INTRO ===== */
+.page-intro {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar a:hover,
+.sidebar .active {
+    background: #4CAF50;
+}
+
+.content {
+    padding: 25px;
+    width: 100%;
+}
+
+/* ================= STOCK LIST ================= */
+
+.stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.stock-card {
+    display: block;
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    text-decoration: none;
+    color: inherit;
+    border-left: 5px solid #4CAF50;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stock-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.stock-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.stock-symbol {
+    font-weight: 700;
+    font-size: 14px;
+    color: #555;
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.stock-change {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.stock-change.up {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.stock-change.down {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.stock-name {
+    font-size: 15px;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+.stock-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+}
+
+/* ================= STOCK DETAIL ================= */
+
+.detail-header {
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+.detail-info {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.detail-info h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.stock-symbol-lg {
+    font-size: 14px;
+    color: #888;
+    background: #f0f0f0;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.detail-price {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.detail-change {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.detail-change.up {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.detail-change.down {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Period Tabs */
+.period-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.period-btn {
+    padding: 8px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.period-btn:hover {
+    border-color: #4CAF50;
+    color: #4CAF50;
+}
+
+.period-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+/* Chart */
+.chart-container {
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    min-height: 520px;
+}
+
+#candleChart {
+    width: 100%;
+    height: 500px;
+}
+
+.chart-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    color: #999;
+    display: none;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark .stock-card {
+    background: #1e1e1e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .stock-card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .stock-symbol {
+    background: #2a2a2a;
+    color: #ccc;
+}
+
+body.dark .stock-change.up {
+    background: #1b5e20;
+    color: #a5d6a7;
+}
+
+body.dark .stock-change.down {
+    background: #b71c1c;
+    color: #ef9a9a;
+}
+
+body.dark .stock-name {
+    color: #aaa;
+}
+
+body.dark .stock-price {
+    color: #e0e0e0;
+}
+
+body.dark .detail-info h2 {
+    color: #e0e0e0;
+}
+
+body.dark .stock-symbol-lg {
+    background: #2a2a2a;
+    color: #ccc;
+}
+
+body.dark .detail-price {
+    color: #e0e0e0;
+}
+
+body.dark .detail-change.up {
+    background: #1b5e20;
+    color: #a5d6a7;
+}
+
+body.dark .detail-change.down {
+    background: #b71c1c;
+    color: #ef9a9a;
+}
+
+body.dark .period-btn {
+    background: #2a2a2a;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.dark .period-btn:hover {
+    background: #333;
+    border-color: #4CAF50;
+    color: #4CAF50;
+}
+
+body.dark .period-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+body.dark .chart-container {
+    background: #1e1e1e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .chart-loading {
+    color: #777;
+}
+
+body.dark .back-btn {
+    color: #66BB6A;
+}

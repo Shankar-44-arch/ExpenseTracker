@@ -165,6 +165,10 @@ body {
     height: 20px;
 }
 
+.toggle-password .eye-icon {
+    display: none;
+}
+
 /* ========== BUTTONS ========== */
 .btn-primary {
     width: 100%;

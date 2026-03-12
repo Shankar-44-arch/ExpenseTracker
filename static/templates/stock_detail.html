@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }} — Stock Chart</title>
+    <link rel="stylesheet" href="{% static 'css/stock1.css' %}">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}">Transactions</a>
+            <a href="{% url 'category' %}">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
+            <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}" class="active">Stocks</a>
+            <a href="{% url 'setting' %}">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>{{ request.user.username }}</strong></p>
+            <small>{{ request.user.email }}</small>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <div class="detail-header">
+            <a href="{% url 'stock' %}" class="back-btn">&larr; Back to Stocks</a>
+            <div class="detail-info">
+                <h2 id="stockName">{{ name }}</h2>
+                <span class="stock-symbol-lg" id="stockSymbol">{{ symbol }}</span>
+                <span class="detail-price" id="stockPrice">—</span>
+                <span class="detail-change" id="stockChange">—</span>
+            </div>
+        </div>
+
+        <div class="period-tabs">
+            <button class="period-btn" data-period="5d">5D</button>
+            <button class="period-btn active" data-period="1mo">1M</button>
+            <button class="period-btn" data-period="3mo">3M</button>
+            <button class="period-btn" data-period="6mo">6M</button>
+            <button class="period-btn" data-period="1y">1Y</button>
+        </div>
+
+        <div class="chart-container">
+            <div id="candleChart"></div>
+            <div class="chart-loading" id="chartLoading">Loading chart data...</div>
+        </div>
+
+    </main>
+</div>
+
+<script src="{% static 'js/stock_detail.js' %}"></script>
+
+<script src="{% static 'js/theme.js' %}"></script>
+
+</body>
+</html>

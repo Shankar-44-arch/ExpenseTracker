@@ -81,3 +81,14 @@ document.addEventListener("keydown", function (e) {
         clearCalc();
     }
 });
+
+/* ===== BIND CALCULATOR BUTTONS VIA DATA ATTRIBUTES ===== */
+document.querySelectorAll('.calc-grid button[data-action]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var action = btn.dataset.action;
+        if (action === 'clear') clearCalc();
+        else if (action === 'remove') removeOne();
+        else if (action === 'calc') calculate();
+        else if (action === 'add') add(btn.dataset.value);
+    });
+});

@@ -77,6 +77,20 @@ body {
     text-align: center;
 }
 
+/* ===== UTILITY CLASSES ===== */
+.hidden { display: none; }
+.inline-form { display: inline; }
+
+/* ===== MESSAGES ===== */
+.messages { margin-bottom: 15px; }
+.msg { padding: 10px 16px; border-radius: 10px; margin-bottom: 6px; font-size: 14px; }
+.msg-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.msg-error { background: #fbe9e7; color: #c62828; border: 1px solid #ef9a9a; }
+
+/* ===== EMPTY STATE ===== */
+.empty-msg { color: #999; text-align: center; padding: 20px; }
+.grid-empty-msg { color: #999; grid-column: 1/-1; text-align: center; padding: 30px; }
+
 
 /* ================= GLOBAL DARK MODE ================= */
 
@@ -178,4 +192,22 @@ body.dark th {
 
 body.dark tbody tr {
     border-bottom-color: #333;
+}
+
+/* Messages */
+body.dark .msg-success {
+    background: #1b5e20;
+    color: #a5d6a7;
+    border-color: #2e7d32;
+}
+
+body.dark .msg-error {
+    background: #b71c1c;
+    color: #ef9a9a;
+    border-color: #c62828;
+}
+
+body.dark .empty-msg,
+body.dark .grid-empty-msg {
+    color: #777;
 }

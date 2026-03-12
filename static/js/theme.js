@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!toggle) return;
 
     toggle.checked = localStorage.getItem("darkMode") === "enabled";
+    toggle.addEventListener("change", function() {
+        toggleDarkMode(this);
+    });
 });
 
 

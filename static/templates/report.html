@@ -25,6 +25,7 @@
             <a href="{%  url 'report' %}" class="active">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}">Stocks</a>
             <a href="{%  url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
@@ -70,12 +71,12 @@
                 <a href="{% url 'export_excel' %}"><button>Excel</button></a>
                 <a href="{% url 'export_csv' %}"><button>CSV</button></a>
                 <a href="{% url 'export_pdf' %}"><button>PDF</button></a>
-                <button id="exportImageBtn">Image</button>
+                <button id="exportImageBtn" data-url="{% url 'export_image' %}">Image</button>
             </div>
         </div>
 
 <!-- Hidden canvas for image export -->
-<canvas id="exportCanvas" style="display:none;" width="800" height="500"></canvas>
+<canvas id="exportCanvas" class="hidden" width="800" height="500"></canvas>
 
 <div id="reportDataHolder"
      data-month-labels='{{ month_labels|safe }}'
@@ -83,60 +84,10 @@
      data-month-income='{{ month_income_data|safe }}'
      data-cat-labels='{{ cat_labels|safe }}'
      data-cat-data='{{ cat_data|safe }}'
-     style="display:none;"></div>
-
-<script>
-    var el = document.getElementById('reportDataHolder');
-    var REPORT_DATA = {
-        monthLabels: JSON.parse(el.dataset.monthLabels),
-        monthExpense: JSON.parse(el.dataset.monthExpense),
-        monthIncome: JSON.parse(el.dataset.monthIncome),
-        catLabels: JSON.parse(el.dataset.catLabels),
-        catData: JSON.parse(el.dataset.catData),
-    };
-</script>
+     class="hidden"></div>
 
 <script src="{% static 'js/report.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>
-
-<script>
-document.getElementById('exportImageBtn').addEventListener('click', function () {
-    fetch("{% url 'export_image' %}")
-        .then(r => r.json())
-        .then(data => {
-            const canvas = document.getElementById('exportCanvas');
-            canvas.style.display = 'block';
-            const ctx = canvas.getContext('2d');
-
-            const colors = ['#4CAF50','#2196F3','#FF9800','#9C27B0','#F44336','#00BCD4','#795548','#607D8B'];
-
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        data: data.data,
-                        backgroundColor: colors.slice(0, data.labels.length),
-                    }]
-                },
-                options: { animation: false, responsive: false },
-                plugins: [{
-                    id: 'downloadAfterRender',
-                    afterRender(chart) {
-                        setTimeout(() => {
-                            const link = document.createElement('a');
-                            link.download = 'expense_report.png';
-                            link.href = canvas.toDataURL('image/png');
-                            link.click();
-                            canvas.style.display = 'none';
-                            chart.destroy();
-                        }, 200);
-                    }
-                }]
-            });
-        });
-});
-</script>
 
     </main>
 </div>

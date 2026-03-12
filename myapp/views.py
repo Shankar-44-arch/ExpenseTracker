@@ -16,6 +16,30 @@ import json
 import base64
 
 
+STOCK_LIST = [
+    ('RELIANCE.NS', 'Reliance Industries'),
+    ('TCS.NS', 'Tata Consultancy Services'),
+    ('INFY.NS', 'Infosys'),
+    ('HDFCBANK.NS', 'HDFC Bank'),
+    ('ICICIBANK.NS', 'ICICI Bank'),
+    ('HINDUNILVR.NS', 'Hindustan Unilever'),
+    ('ITC.NS', 'ITC Limited'),
+    ('SBIN.NS', 'State Bank of India'),
+    ('BHARTIARTL.NS', 'Bharti Airtel'),
+    ('KOTAKBANK.NS', 'Kotak Mahindra Bank'),
+    ('LT.NS', 'Larsen & Toubro'),
+    ('WIPRO.NS', 'Wipro'),
+    ('AXISBANK.NS', 'Axis Bank'),
+    ('TATAMOTORS.NS', 'Tata Motors'),
+    ('MARUTI.NS', 'Maruti Suzuki'),
+    ('AAPL', 'Apple Inc.'),
+    ('GOOGL', 'Alphabet Inc.'),
+    ('MSFT', 'Microsoft Corp.'),
+    ('AMZN', 'Amazon.com Inc.'),
+    ('TSLA', 'Tesla Inc.'),
+]
+
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -644,6 +668,105 @@ def export_image(request):
         'labels': list(category_totals.keys()) or ['No Data'],
         'data': list(category_totals.values()) or [0],
     })
+
+
+# ================= STOCK VIEWS =================
+
+@login_required
+def stock_view(request):
+    import yfinance as yf
+    stocks = []
+    symbols = [s[0] for s in STOCK_LIST]
+    name_map = dict(STOCK_LIST)
+
+    try:
+        tickers = yf.Tickers(' '.join(symbols))
+        for symbol in symbols:
+            try:
+                ticker = tickers.tickers[symbol]
+                info = ticker.fast_info
+                price = getattr(info, 'last_price', None) or 0
+                prev = getattr(info, 'previous_close', None) or price
+                change = price - prev
+                change_pct = (change / prev * 100) if prev else 0
+                stocks.append({
+                    'symbol': symbol,
+                    'name': name_map[symbol],
+                    'price': round(price, 2),
+                    'change': round(change, 2),
+                    'change_pct': round(change_pct, 2),
+                })
+            except Exception:
+                stocks.append({
+                    'symbol': symbol,
+                    'name': name_map[symbol],
+                    'price': 0,
+                    'change': 0,
+                    'change_pct': 0,
+                })
+    except Exception:
+        for symbol, name in STOCK_LIST:
+            stocks.append({
+                'symbol': symbol,
+                'name': name,
+                'price': 0,
+                'change': 0,
+                'change_pct': 0,
+            })
+
+    return render(request, 'stock.html', {'stocks': stocks})
+
+
+@login_required
+def stock_detail_api(request, symbol):
+    """Return OHLC data as JSON for candlestick chart."""
+    import yfinance as yf
+    period = request.GET.get('period', '1mo')
+    allowed_periods = ['5d', '1mo', '3mo', '6mo', '1y']
+    if period not in allowed_periods:
+        period = '1mo'
+
+    interval_map = {'5d': '15m', '1mo': '1d', '3mo': '1d', '6mo': '1d', '1y': '1wk'}
+    interval = interval_map[period]
+
+    try:
+        ticker = yf.Ticker(symbol)
+        hist = ticker.history(period=period, interval=interval)
+        info = ticker.fast_info
+
+        candles = []
+        for date, row in hist.iterrows():
+            ts = int(date.timestamp())
+            candles.append({
+                'time': ts,
+                'open': round(float(row['Open']), 2),
+                'high': round(float(row['High']), 2),
+                'low': round(float(row['Low']), 2),
+                'close': round(float(row['Close']), 2),
+            })
+
+        name = dict(STOCK_LIST).get(symbol, symbol)
+        price = getattr(info, 'last_price', None) or 0
+        prev = getattr(info, 'previous_close', None) or price
+        change = price - prev
+        change_pct = (change / prev * 100) if prev else 0
+
+        return JsonResponse({
+            'name': name,
+            'symbol': symbol,
+            'price': round(price, 2),
+            'change': round(change, 2),
+            'change_pct': round(change_pct, 2),
+            'candles': candles,
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+@login_required
+def stock_detail_view(request, symbol):
+    name = dict(STOCK_LIST).get(symbol, symbol)
+    return render(request, 'stock_detail.html', {'symbol': symbol, 'name': name})
 
 
 

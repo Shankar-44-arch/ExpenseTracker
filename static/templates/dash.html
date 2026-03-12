@@ -24,6 +24,7 @@
             <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}">Stocks</a>
             <a href="{% url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
@@ -119,7 +120,7 @@
                         </td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="4" style="text-align:center;color:#999;padding:20px;">No transactions yet.</td></tr>
+                    <tr><td colspan="4" class="empty-msg">No transactions yet.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -135,18 +136,7 @@
      data-month-income='{{ month_income_data|safe }}'
      data-cat-labels='{{ cat_labels|safe }}'
      data-cat-data='{{ cat_data|safe }}'
-     style="display:none;"></div>
-
-<script>
-    var el = document.getElementById('chartDataHolder');
-    var CHART_DATA = {
-        monthLabels: JSON.parse(el.dataset.monthLabels),
-        monthExpense: JSON.parse(el.dataset.monthExpense),
-        monthIncome: JSON.parse(el.dataset.monthIncome),
-        catLabels: JSON.parse(el.dataset.catLabels),
-        catData: JSON.parse(el.dataset.catData),
-    };
-</script>
+     class="hidden"></div>
 
 <script src="{% static 'js/dash.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>

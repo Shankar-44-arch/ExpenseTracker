@@ -38,4 +38,9 @@ urlpatterns = [
     path('report/export/excel/', export_excel, name='export_excel'),
     path('report/export/pdf/', export_pdf, name='export_pdf'),
     path('report/export/image/', export_image, name='export_image'),
+
+    # Stocks
+    path('stocks/', stock_view, name='stock'),
+    path('stocks/<str:symbol>/', stock_detail_view, name='stock_detail'),
+    path('api/stocks/<str:symbol>/', stock_detail_api, name='stock_detail_api'),
 ]

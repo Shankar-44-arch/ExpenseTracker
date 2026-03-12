@@ -22,6 +22,7 @@
             <a href="{% url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}">Calculator</a>
             <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}">Stocks</a>
             <a href="{% url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
@@ -41,10 +42,9 @@
         </div>
 
         {% if messages %}
-        <div class="messages" style="margin-bottom:15px;">
+        <div class="messages">
             {% for message in messages %}
-            <div class="msg" style="padding:10px 16px;border-radius:10px;margin-bottom:6px;font-size:14px;
-                {% if message.tags == 'success' %}background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;{% else %}background:#fbe9e7;color:#c62828;border:1px solid #ef9a9a;{% endif %}">
+            <div class="msg {% if message.tags == 'success' %}msg-success{% else %}msg-error{% endif %}">
                 {{ message }}
             </div>
             {% endfor %}
@@ -66,20 +66,20 @@
                 <h3>{{ cat.icon }} {{ cat.name }}</h3>
                 <p>{{ cat.description|default:"No description" }}</p>
                 <div class="card-actions">
-                    <button onclick="openEditCatModal({{ cat.pk }}, '{{ cat.name|escapejs }}', '{{ cat.icon|escapejs }}', '{{ cat.description|escapejs }}')">Edit</button>
-                    <form method="POST" action="{% url 'delete_category' cat.pk %}" style="display:inline;" onsubmit="return confirm('Delete category &quot;{{ cat.name|escapejs }}&quot;?')">
+                    <button class="edit-cat-btn" data-pk="{{ cat.pk }}" data-name="{{ cat.name|escapejs }}" data-icon="{{ cat.icon|escapejs }}" data-desc="{{ cat.description|escapejs }}">Edit</button>
+                    <form method="POST" action="{% url 'delete_category' cat.pk %}" class="inline-form" data-confirm="Delete category &quot;{{ cat.name|escapejs }}&quot;?">
                         {% csrf_token %}
                         <button type="submit" class="delete">Delete</button>
                     </form>
                 </div>
             </div>
             {% empty %}
-            <p style="color:#999;grid-column:1/-1;text-align:center;padding:30px;">No categories yet. Add one!</p>
+            <p class="grid-empty-msg">No categories yet. Add one!</p>
             {% endfor %}
         </section>
 
         <!-- List View -->
-        <section class="category-list" id="listView" style="display:none;">
+        <section class="category-list" id="listView">
             {% for cat in categories %}
             <div class="list-card">
                 <div class="list-info">
@@ -87,15 +87,15 @@
                     <p>{{ cat.description|default:"No description" }}</p>
                 </div>
                 <div class="list-actions">
-                    <button onclick="openEditCatModal({{ cat.pk }}, '{{ cat.name|escapejs }}', '{{ cat.icon|escapejs }}', '{{ cat.description|escapejs }}')">Edit</button>
-                    <form method="POST" action="{% url 'delete_category' cat.pk %}" style="display:inline;" onsubmit="return confirm('Delete this category?')">
+                    <button class="edit-cat-btn" data-pk="{{ cat.pk }}" data-name="{{ cat.name|escapejs }}" data-icon="{{ cat.icon|escapejs }}" data-desc="{{ cat.description|escapejs }}">Edit</button>
+                    <form method="POST" action="{% url 'delete_category' cat.pk %}" class="inline-form" data-confirm="Delete this category?">
                         {% csrf_token %}
                         <button type="submit" class="delete">Delete</button>
                     </form>
                 </div>
             </div>
             {% empty %}
-            <p style="color:#999;text-align:center;padding:30px;">No categories yet. Add one!</p>
+            <p class="empty-msg">No categories yet. Add one!</p>
             {% endfor %}
         </section>
 
@@ -202,80 +202,8 @@
     </div>
 </div>
 
-<script>
-/* ---- GRID / LIST TOGGLE ---- */
-const gridBtn = document.getElementById('gridViewBtn');
-const listBtn = document.getElementById('listViewBtn');
-const gridView = document.getElementById('gridView');
-const listView = document.getElementById('listView');
-
-gridBtn.addEventListener('click', () => {
-    gridView.style.display = 'grid';
-    listView.style.display = 'none';
-    gridBtn.classList.add('active');
-    listBtn.classList.remove('active');
-});
-
-listBtn.addEventListener('click', () => {
-    gridView.style.display = 'none';
-    listView.style.display = 'block';
-    listBtn.classList.add('active');
-    gridBtn.classList.remove('active');
-});
-
-/* ---- ADD MODAL ---- */
-const addModal = document.getElementById('addCategoryModal');
-document.getElementById('addCategoryBtn').addEventListener('click', () => addModal.style.display = 'block');
-document.getElementById('closeModal').addEventListener('click', () => addModal.style.display = 'none');
-document.getElementById('cancelBtn').addEventListener('click', () => addModal.style.display = 'none');
-window.addEventListener('click', e => { if (e.target === addModal) addModal.style.display = 'none'; });
-
-/* Icon selection (add) */
-const presetIcons = document.querySelectorAll('#presetIcons .icon-option');
-const selectedIconInput = document.getElementById('selectedIcon');
-presetIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-        presetIcons.forEach(i => i.classList.remove('active'));
-        icon.classList.add('active');
-        selectedIconInput.value = icon.getAttribute('data-icon');
-    });
-});
-
-/* ---- EDIT MODAL ---- */
-const editModal = document.getElementById('editCategoryModal');
-const editPresetIcons = document.querySelectorAll('#editPresetIcons .icon-option');
-const editSelectedIconInput = document.getElementById('editSelectedIcon');
-
-editPresetIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-        editPresetIcons.forEach(i => i.classList.remove('active'));
-        icon.classList.add('active');
-        editSelectedIconInput.value = icon.getAttribute('data-icon');
-    });
-});
-
-document.getElementById('closeEditModal').addEventListener('click', () => editModal.style.display = 'none');
-document.getElementById('cancelEditBtn').addEventListener('click', () => editModal.style.display = 'none');
-window.addEventListener('click', e => { if (e.target === editModal) editModal.style.display = 'none'; });
-
-function openEditCatModal(pk, name, icon, desc) {
-    document.getElementById('editCatForm').action = '/categories/edit/' + pk + '/';
-    document.getElementById('editCatName').value = name;
-    document.getElementById('editCatDesc').value = desc;
-    editSelectedIconInput.value = icon;
-
-    editPresetIcons.forEach(i => {
-        i.classList.toggle('active', i.getAttribute('data-icon') === icon);
-    });
-
-    editModal.style.display = 'block';
-}
-</script>
-
+<script src="{% static 'js/cat.js' %}"></script>
 <script src="{% static 'js/theme.js' %}"></script>
-
-</body>
-</html>
 
 </body>
 </html>

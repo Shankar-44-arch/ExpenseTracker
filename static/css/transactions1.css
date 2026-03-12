@@ -8,6 +8,14 @@
     flex-wrap: wrap;
 }
 
+.filter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
 .filters input,
 .filters select {
     padding: 8px;

@@ -1,111 +1,82 @@
- // Toggle Grid/List Views
-        const gridBtn = document.getElementById('gridViewBtn');
-        const listBtn = document.getElementById('listViewBtn');
-        const gridView = document.getElementById('gridView');
-        const listView = document.getElementById('listView');
+/* ---- GRID / LIST TOGGLE ---- */
+const gridBtn = document.getElementById('gridViewBtn');
+const listBtn = document.getElementById('listViewBtn');
+const gridView = document.getElementById('gridView');
+const listView = document.getElementById('listView');
 
-        gridBtn.addEventListener('click', () => {
-            gridView.style.display = 'grid';
-            listView.style.display = 'none';
-            gridBtn.classList.add('active');
-            listBtn.classList.remove('active');
-        });
+gridBtn.addEventListener('click', () => {
+    gridView.style.display = 'grid';
+    listView.style.display = 'none';
+    gridBtn.classList.add('active');
+    listBtn.classList.remove('active');
+});
 
-        listBtn.addEventListener('click', () => {
-            gridView.style.display = 'none';
-            listView.style.display = 'block';
-            listBtn.classList.add('active');
-            gridBtn.classList.remove('active');
-        });
+listBtn.addEventListener('click', () => {
+    gridView.style.display = 'none';
+    listView.style.display = 'block';
+    listBtn.classList.add('active');
+    gridBtn.classList.remove('active');
+});
 
-        // --- New Modal Code ---
-        const modal = document.getElementById('addCategoryModal');
-        const openModalBtn = document.getElementById('addCategoryBtn');
-        const closeModalX = document.getElementById('closeModal');
-        const cancelBtn = document.getElementById('cancelBtn');
+/* ---- ADD MODAL ---- */
+const addModal = document.getElementById('addCategoryModal');
+document.getElementById('addCategoryBtn').addEventListener('click', () => addModal.style.display = 'block');
+document.getElementById('closeModal').addEventListener('click', () => addModal.style.display = 'none');
+document.getElementById('cancelBtn').addEventListener('click', () => addModal.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === addModal) addModal.style.display = 'none'; });
 
-        // Open Modal
-        openModalBtn.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
+/* Icon selection (add) */
+const presetIcons = document.querySelectorAll('#presetIcons .icon-option');
+const selectedIconInput = document.getElementById('selectedIcon');
+presetIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        presetIcons.forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        selectedIconInput.value = icon.getAttribute('data-icon');
+    });
+});
 
-        // Close Modal functions
-        const closeModal = () => {
-            modal.style.display = 'none';
-        };
+/* ---- EDIT MODAL ---- */
+const editModal = document.getElementById('editCategoryModal');
+const editPresetIcons = document.querySelectorAll('#editPresetIcons .icon-option');
+const editSelectedIconInput = document.getElementById('editSelectedIcon');
 
-        closeModalX.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
+editPresetIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        editPresetIcons.forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        editSelectedIconInput.value = icon.getAttribute('data-icon');
+    });
+});
 
-        // Close if user clicks outside the modal content
-        window.addEventListener('click', (event) => {
-            if (event.target == modal) {
-                closeModal();
-            }
-        });
+document.getElementById('closeEditModal').addEventListener('click', () => editModal.style.display = 'none');
+document.getElementById('cancelEditBtn').addEventListener('click', () => editModal.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === editModal) editModal.style.display = 'none'; });
 
-        // Handle Form Submission
-        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+function openEditCatModal(pk, name, icon, desc) {
+    document.getElementById('editCatForm').action = '/categories/edit/' + pk + '/';
+    document.getElementById('editCatName').value = name;
+    document.getElementById('editCatDesc').value = desc;
+    editSelectedIconInput.value = icon;
 
-            const name = document.getElementById('categoryName').value;
-            const icon = document.getElementById('categoryIcon').value;
-            const color = document.getElementById('categoryColor').value;
+    editPresetIcons.forEach(i => {
+        i.classList.toggle('active', i.getAttribute('data-icon') === icon);
+    });
 
-            // This is where you would normally send data to your Django backend
-            console.log("New Category Added:", { name, icon, color });
+    editModal.style.display = 'block';
+}
 
-            alert(`Category "${name}" added successfully!`);
-            closeModal();
-            e.target.reset(); // Clear form for next time
-        });
+/* ---- EDIT BUTTONS (data-attribute driven) ---- */
+document.querySelectorAll('.edit-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        openEditCatModal(btn.dataset.pk, btn.dataset.name, btn.dataset.icon, btn.dataset.desc);
+    });
+});
 
-        const descArea = document.getElementById('categoryDesc');
-        const presetIcons = document.querySelectorAll('.icon-option');
-        const fileInput = document.getElementById('categoryIconFile');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
-
-        let selectedIcon = "💰"; // Default
-
-        // 1. Auto-Resize Description
-        descArea.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-
-        // 2. Handle Preset Icon Selection
-        presetIcons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                presetIcons.forEach(i => i.classList.remove('active'));
-                icon.classList.add('active');
-                selectedIcon = icon.getAttribute('data-icon');
-                fileInput.value = ""; // Clear file if emoji is picked
-                fileNameDisplay.innerText = "";
-            });
-        });
-
-        // 3. Handle File Upload Trigger
-        uploadBtn.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                presetIcons.forEach(i => i.classList.remove('active'));
-                selectedIcon = "custom-file";
-                fileNameDisplay.innerText = "Selected: " + e.target.files[0].name;
-            }
-        });
-
-        // 4. Form Submit
-        document.getElementById('addCategoryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('categoryName').value,
-                description: descArea.value,
-                icon: selectedIcon === "custom-file" ? fileInput.files[0] : selectedIcon
-            };
-            console.log("Saving Category Data:", data);
-            alert("Category Saved!");
-            modal.style.display = 'none';
-            e.target.reset();
-            descArea.style.height = 'auto';
-        });
+/* ---- DELETE CONFIRMATION (data-attribute driven) ---- */
+document.querySelectorAll('.card-actions .inline-form, .list-actions .inline-form').forEach(form => {
+    form.addEventListener('submit', e => {
+        var msg = form.dataset.confirm || 'Delete this category?';
+        if (!confirm(msg)) e.preventDefault();
+    });
+});

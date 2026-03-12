@@ -63,6 +63,7 @@
 /* Messages */
 .messages {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .msg {
@@ -87,6 +88,15 @@
 /* Danger zone */
 .card.danger {
     border: 1px solid #f4433640;
+}
+
+.danger-desc {
+    margin-bottom: 12px;
+}
+
+.delete-modal-text {
+    margin-bottom: 15px;
+    color: #777;
 }
 
 .muted {
@@ -345,5 +355,9 @@ body.dark .msg-error {
 /* Danger card */
 body.dark .card.danger {
     border-color: #e5393540;
+}
+
+body.dark .delete-modal-text {
+    color: #999;
 }
 

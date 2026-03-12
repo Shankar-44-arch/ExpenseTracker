@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stocks</title>
+    <link rel="stylesheet" href="{% static 'css/stock1.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">FinTracker</h2>
+
+        <nav class="menu">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transaction' %}">Transactions</a>
+            <a href="{% url 'category' %}">Categories</a>
+            <a href="{% url 'report' %}">Reports</a>
+            <a href="{% url 'calculator' %}">Calculator</a>
+            <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}" class="active">Stocks</a>
+            <a href="{% url 'setting' %}">Settings</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+        </nav>
+
+        <div class="profile">
+            <p><strong>{{ request.user.username }}</strong></p>
+            <small>{{ request.user.email }}</small>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <div class="page-intro">
+            <h2>Stock Market</h2>
+            <p>Track live stock prices — click any stock to view its candlestick chart</p>
+        </div>
+
+        <div class="stock-grid">
+            {% for s in stocks %}
+            <a href="{% url 'stock_detail' s.symbol %}" class="stock-card">
+                <div class="stock-top">
+                    <span class="stock-symbol">{{ s.symbol }}</span>
+                    <span class="stock-change {% if s.change >= 0 %}up{% else %}down{% endif %}">
+                        {% if s.change >= 0 %}+{% endif %}{{ s.change }} ({{ s.change_pct }}%)
+                    </span>
+                </div>
+                <div class="stock-name">{{ s.name }}</div>
+                <div class="stock-price">
+                    {% if '.NS' in s.symbol %}₹{% else %}${% endif %}{{ s.price }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+    </main>
+</div>
+
+<script src="{% static 'js/theme.js' %}"></script>
+
+</body>
+</html>

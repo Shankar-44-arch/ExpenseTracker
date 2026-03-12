@@ -1,3 +1,13 @@
+/* Parse chart data from data attributes */
+var _dhEl = document.getElementById('chartDataHolder');
+var CHART_DATA = _dhEl ? {
+    monthLabels: JSON.parse(_dhEl.dataset.monthLabels),
+    monthExpense: JSON.parse(_dhEl.dataset.monthExpense),
+    monthIncome: JSON.parse(_dhEl.dataset.monthIncome),
+    catLabels: JSON.parse(_dhEl.dataset.catLabels),
+    catData: JSON.parse(_dhEl.dataset.catData),
+} : {};
+
 const isDark = document.body.classList.contains('dark');
 const textColor = isDark ? '#e0e0e0' : '#666';
 const gridColor = isDark ? '#333' : '#e0e0e0';

@@ -61,10 +61,13 @@
     margin-top: 15px;
 }
 
-.card-actions button {
-    border: none;
+.card-actions button,
+.list-actions button {
     padding: 6px 12px;
     border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
 }
 
 .delete {
@@ -72,14 +75,18 @@
     color: white;
 }
 
-.card-actions button:hover {
+.card-actions button:hover,
+.list-actions button:hover {
     opacity: 0.85;
     transform: scale(1.05);
     transition: 0.2s ease;
-    cursor: pointer;
 }
 
 /* List View */
+#listView {
+    display: none;
+}
+
 .category-list {
     display: flex;
     flex-direction: column;
@@ -118,22 +125,7 @@
     gap: 10px;
 }
 
-.list-actions button {
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-.list-actions .delete {
-    background: #f44336;
-    color: white;
-}
-
-.list-actions button:hover {
-    opacity: 0.85;
-    transform: scale(1.05);
-}
+/* list-actions button styles merged with card-actions above */
 
 /* Modal Background Overlay */
 .modal {
@@ -403,11 +395,26 @@ body.dark .upload-divider {
     color: #666;
 }
 
-body.dark .card-actions button {
+body.dark .card-actions button,
+body.dark .list-actions button {
+    background: #2a2a2a;
     color: #e0e0e0;
+    border: 1px solid #444;
 }
 
-body.dark .delete {
+body.dark .card-actions button:hover,
+body.dark .list-actions button:hover {
+    background: #333;
+}
+
+body.dark .card-actions .delete,
+body.dark .list-actions .delete {
     background: #c62828;
     color: white;
+    border: none;
+}
+
+body.dark .card-actions .delete:hover,
+body.dark .list-actions .delete:hover {
+    background: #b71c1c;
 }

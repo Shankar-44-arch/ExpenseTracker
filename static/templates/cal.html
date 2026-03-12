@@ -21,6 +21,7 @@
             <a href="{%  url 'report' %}">Reports</a>
             <a href="{% url 'calculator' %}" class="active">Calculator</a>
             <a href="{% url 'alert' %}">Alerts</a>
+            <a href="{% url 'stock' %}">Stocks</a>
             <a href="{%  url 'setting' %}">Settings</a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
@@ -48,26 +49,26 @@
                 <input type="text" id="calc-display" readonly>
 
                 <div class="calc-grid">
-                    <button onclick="clearCalc()">C</button>
-                    <button onclick="removeOne()">⌫</button>
-                    <button onclick="add('/')">÷</button>
-                    <button onclick="add('*')">×</button>
-                    <button onclick="add('-')">−</button>
+                    <button data-action="clear">C</button>
+                    <button data-action="remove">⌫</button>
+                    <button data-action="add" data-value="/">÷</button>
+                    <button data-action="add" data-value="*">×</button>
+                    <button data-action="add" data-value="-">−</button>
 
-                    <button onclick="add('7')">7</button>
-                    <button onclick="add('8')">8</button>
-                    <button onclick="add('9')">9</button>
-                    <button onclick="add('+')">+</button>
+                    <button data-action="add" data-value="7">7</button>
+                    <button data-action="add" data-value="8">8</button>
+                    <button data-action="add" data-value="9">9</button>
+                    <button data-action="add" data-value="+">+</button>
 
-                    <button onclick="add('4')">4</button>
-                    <button onclick="add('5')">5</button>
-                    <button onclick="add('6')">6</button>
-                    <button onclick="add('1')">1</button>
+                    <button data-action="add" data-value="4">4</button>
+                    <button data-action="add" data-value="5">5</button>
+                    <button data-action="add" data-value="6">6</button>
+                    <button data-action="add" data-value="1">1</button>
                     
-                    <button onclick="add('2')">2</button>
-                    <button onclick="add('3')">3</button>
-                    <button onclick="calculate()" class="equal">=</button>
-                    <button onclick="add('0')" class="zero">0</button>
+                    <button data-action="add" data-value="2">2</button>
+                    <button data-action="add" data-value="3">3</button>
+                    <button data-action="calc" class="equal">=</button>
+                    <button data-action="add" data-value="0" class="zero">0</button>
                 </div>
             </div>
 
