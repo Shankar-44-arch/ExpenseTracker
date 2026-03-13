@@ -1,0 +1,12 @@
+# Core framework
+Django==6.0.3
+
+# Database driver (PostgreSQL)
+psycopg2-binary>=2.9
+
+# Report/export features
+openpyxl>=3.1 #excel export
+reportlab>=4.0 # PDF generation
+
+# Stock market data
+yfinance>=0.2

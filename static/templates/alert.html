@@ -117,7 +117,7 @@
 
             <div class="modal-actions">
                 <button type="submit" class="save-btn">Set Limit</button>
-                <button type="button" class="cancel-btn" data-modal="addAlertModal">Cancel</button>
+                <button type="button" class="cancel-btn" onclick="closeModal('addAlertModal')">Cancel</button>
             </div>
         </form>
     </div>
@@ -137,13 +137,54 @@
 
             <div class="modal-actions">
                 <button type="submit" class="save-btn">Update</button>
-                <button type="button" class="cancel-btn" data-modal="editAlertModal">Cancel</button>
+                <button type="button" class="cancel-btn" onclick="closeModal('editAlertModal')">Cancel</button>
             </div>
         </form>
     </div>
 </div>
 
-<script src="{% static 'js/alert.js' %}"></script>
+<script>
+    // Set progress bar widths from data attributes
+    document.querySelectorAll('.progress-fill').forEach(function(bar) {
+        bar.style.width = bar.dataset.percent + '%';
+    });
+
+    // Add Alert modal
+    document.getElementById('addAlertBtn').addEventListener('click', function() {
+        document.getElementById('addAlertModal').classList.add('active');
+    });
+
+    // Edit Alert modal via data attributes
+    document.querySelectorAll('.edit-alert-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('editAlertCategory').value = btn.dataset.category;
+            document.getElementById('editAlertLimit').value = btn.dataset.limit;
+            document.getElementById('editAlertForm').action = '/alerts/edit/' + btn.dataset.pk + '/';
+            document.getElementById('editAlertModal').classList.add('active');
+        });
+    });
+
+    // Delete confirmation via data attributes
+    document.querySelectorAll('.card-actions .inline-form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            var cat = form.querySelector('.delete').dataset.category;
+            if (!confirm('Remove alert for "' + cat + '"?')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    // Close modal when clicking overlay
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) overlay.classList.remove('active');
+        });
+    });
+</script>
 
 <script src="{% static 'js/theme.js' %}"></script>
 
