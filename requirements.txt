@@ -1,6 +1,12 @@
 # Core framework
 Django==6.0.3
 
+# Production server
+gunicorn>=22.0
+
+# Static file serving for production
+whitenoise>=6.7
+
 # Database driver (PostgreSQL)
 psycopg2-binary>=2.9
 

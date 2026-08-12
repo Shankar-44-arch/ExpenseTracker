@@ -19,13 +19,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
+def get_env(name, default=None):
+    value = os.getenv(name, default)
+    return value if value is not None else default
+
+
+def get_bool_env(name, default=False):
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def get_list_env(name, default=None):
+    value = os.getenv(name)
+    if not value:
+        return default or []
+    return [item.strip() for item in value.split(',') if item.strip()]
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ***REMOVED***
+SECRET_KEY = get_env('SECRET_KEY', 'django-insecure-change-me-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_bool_env('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_list_env('ALLOWED_HOSTS', ['localhost', '127.0.0.1'])
 
 
 # Application definition
@@ -42,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,14 +95,20 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': ***REMOVED***,
-        'NAME': ***REMOVED***,
-        'USER': ***REMOVED***,
-        'PASSWORD': ***REMOVED***,
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': get_env('DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': get_env('DB_NAME', BASE_DIR / 'db.sqlite3'),
+        'USER': get_env('DB_USER', ''),
+        'PASSWORD': get_env('DB_PASSWORD', ''),
+        'HOST': get_env('DB_HOST', ''),
+        'PORT': get_env('DB_PORT', ''),
     }
 }
+
+if DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+    DATABASES['default'].pop('USER', None)
+    DATABASES['default'].pop('PASSWORD', None)
+    DATABASES['default'].pop('HOST', None)
+    DATABASES['default'].pop('PORT', None)
 
 
 # Password validation
@@ -122,7 +148,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = get_bool_env('SECURE_SSL_REDIRECT', True)
+    SECURE_HSTS_SECONDS = int(get_env('SECURE_HSTS_SECONDS', 31536000))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = get_bool_env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True)
+    SECURE_HSTS_PRELOAD = get_bool_env('SECURE_HSTS_PRELOAD', True)
+
+CSRF_TRUSTED_ORIGINS = get_list_env('CSRF_TRUSTED_ORIGINS', [])
 
 LOGIN_URL = 'login'
