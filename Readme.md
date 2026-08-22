@@ -98,32 +98,34 @@ python manage.py runserver
 
 ## Screenshots
 
-Add project images here once they are available.
+### Sign-in Page
 
-### Login Page
+![Sign-in](snapshots/sign-in.png)
 
-<!-- TODO: Add login page screenshot here -->
-<!-- Example: ![Login Page](docs/images/login-page.png) -->
 
 ### Dashboard
 
-<!-- TODO: Add dashboard screenshot here -->
-<!-- Example: ![Dashboard](docs/images/dashboard.png) -->
+![Dashboard](snapshots/dashboard.png)
 
 ### Transactions
 
-<!-- TODO: Add transactions screenshot here -->
-<!-- Example: ![Transactions](docs/images/transactions.png) -->
+![Transactions](snapshots/transactions.png)
 
-### Reports
-
-<!-- TODO: Add reports screenshot here -->
-<!-- Example: ![Reports](docs/images/reports.png) -->
 
 ### Categories
 
-<!-- TODO: Add categories screenshot here -->
-<!-- Example: ![Categories](docs/images/categories.png) -->
+![Categories](snapshots/categories.png)
+
+### Calculator
+
+![Calculator](snapshots/calculator.png)
+
+### Stocks
+
+![Stocks](snapshots/stock.png)
+
+
+For more images check [snapshots](snapshots/) directory.
 
 ## Useful URLs
 

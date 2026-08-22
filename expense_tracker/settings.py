@@ -42,7 +42,7 @@ def get_list_env(name, default=None):
 SECRET_KEY = get_env('SECRET_KEY', 'django-insecure-change-me-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_bool_env('DEBUG', False)
+DEBUG = get_bool_env('DEBUG', True)
 
 ALLOWED_HOSTS = get_list_env('ALLOWED_HOSTS', ['localhost', '127.0.0.1'])
 
