@@ -100,30 +100,39 @@ python manage.py runserver
 
 ### Sign-in Page
 
-![Sign-in](snapshots/sign-in.png)
-
+<p align="center">
+  <img src="snapshots/sign-in.png" alt="Sign-in" width="500" />
+</p>
 
 ### Dashboard
 
-![Dashboard](snapshots/dashboard.png)
+<p align="center">
+  <img src="snapshots/dashboard.png" alt="Dashboard" width="500" />
+</p>
 
 ### Transactions
 
-![Transactions](snapshots/transactions.png)
-
+<p align="center">
+  <img src="snapshots/transactions.png" alt="Transactions" width="500" />
+</p>
 
 ### Categories
 
-![Categories](snapshots/categories.png)
+<p align="center">
+  <img src="snapshots/categories.png" alt="Categories" width="500" />
+</p>
 
 ### Calculator
 
-![Calculator](snapshots/calculator.png)
+<p align="center">
+  <img src="snapshots/calculator.png" alt="Calculator" width="500" />
+</p>
 
 ### Stocks
 
-![Stocks](snapshots/stock.png)
-
+<p align="center">
+  <img src="snapshots/stock.png" alt="Stocks" width="500" />
+</p>
 
 For more images check [snapshots](snapshots/) directory.
 
